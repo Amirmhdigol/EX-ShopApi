@@ -8,7 +8,7 @@ namespace Common.Domain.Exceptions
 {
     public class InvalidDomainDataException : BaseDomainException
     {
-        public InvalidDomainDataException()
+        public InvalidDomainDataException():base("Slug already Exists")
         {
 
         }
