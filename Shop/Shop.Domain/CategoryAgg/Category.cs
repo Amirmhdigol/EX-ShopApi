@@ -1,4 +1,4 @@
-﻿using Common.Domain.Bases;
+﻿    using Common.Domain.Bases;
 using Common.Domain.Exceptions;
 using Common.Domain.Utilities;
 using Common.Domain.ValueObjects;
