@@ -36,7 +36,6 @@ namespace Common.Application.Validation.FluentValidations
             {
                if(string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length is < 11 or > 11)
                    context.AddFailure(errorMessage);
-
             });
         }
 

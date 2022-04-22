@@ -48,16 +48,46 @@ namespace Shop.Domain.OrderAgg
 
         public void AddItem(OrderItem item)
         {
+            ChangeOrderGuard();
+
+            var OldItem = Items.FirstOrDefault(a => a.Id == item.InventoryId);
+            if (OldItem != null)
+                OldItem.ChangeCount(item.Count + OldItem.Count);
+            return;
+
             Items.Add(item);
         }
         public void RemoveItem(long itemId)
         {
+            ChangeOrderGuard();
+          
             var CurrentItem = Items.FirstOrDefault(a => a.Id == itemId);
             if (CurrentItem != null)
                 Items.Remove(CurrentItem);
         }
+        public void IncreaseItemCount(long itemId, int count)
+        {
+            ChangeOrderGuard();
+           
+            var Currentitem = Items.FirstOrDefault(a => a.Id == itemId);
+            if (Currentitem == null)
+                throw new NullOrEmptyDomainDataException();
+            
+            Currentitem.IncreaseCount(count);
+        }
+        public void DecreaseItemCount(long itemId, int count)
+        {
+            ChangeOrderGuard();
+            
+            var Currentitem = Items.FirstOrDefault(a => a.Id == itemId);
+            if (Currentitem == null)
+                throw new NullOrEmptyDomainDataException();
+            
+            Currentitem.DecreaseCount(count);
+        }
         public void ChangeItemCount(long itemId, int newCount)
         {
+            ChangeOrderGuard();
             var CurrentItem = Items.FirstOrDefault(a => a.Id == itemId);
             if (CurrentItem == null)
                 throw new NullOrEmptyDomainDataException();
@@ -71,7 +101,13 @@ namespace Shop.Domain.OrderAgg
         }
         public void Checkout(OrderAddress orderAddress)
         {
+            ChangeOrderGuard();
             Address = orderAddress;
+        }
+        public void ChangeOrderGuard()
+        {
+            if (Status != OrderStatus.pennding)
+                throw new InvalidDomainDataException("Cant edit this Order");
         }
     }
 }
