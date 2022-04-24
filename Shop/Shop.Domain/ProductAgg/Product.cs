@@ -20,7 +20,9 @@ namespace Shop.Domain.ProductAgg
         public Product(string title, string imageName, string description, long categoryId, long subCategoryId
             , long secondrySubCategoryId, string slug, SeoData seoData, IProductDomainService domainService)
         {
-            Guard(title, slug, imageName, description, domainService);
+            Guard(title, slug, description, domainService);
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+
             Title = title;
             ImageName = imageName;
             Description = description;
@@ -42,12 +44,11 @@ namespace Shop.Domain.ProductAgg
         public List<ProductImage> Images { get; private set; }
         public List<ProductSpecification> Specifications { get; private set; }
 
-        public void EditProduct(string title, string imageName, string description, long categoryId, long subCategoryId
+        public void EditProduct(string title, string description, long categoryId, long subCategoryId
            , long secondrySubCategoryId, string slug, SeoData seoData, IProductDomainService domainService)
         {
-            Guard(title,slug,imageName,description,domainService);
+            Guard(title,slug,description,domainService);
             Title = title;
-            ImageName = imageName;
             Description = description;
             CategoryId = categoryId;
             SubCategoryId = subCategoryId;
@@ -55,27 +56,32 @@ namespace Shop.Domain.ProductAgg
             Slug = slug.ToSlug();
             SeoData = seoData;
         }
+        public void SetProductImage(string imageName)
+        {
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+            ImageName = imageName;
+        }
         public void AddImage(ProductImage image)
         {
             image.ProductId = Id;
             Images.Add(image);
         }
-        public void RemoveImage(long imageId)
+        public string RemoveImage(long imageId)
         {
             var Image = Images.FirstOrDefault(a => a.Id == imageId);
             if (Image == null)
-                return;
+                throw new NullOrEmptyDomainDataException("Image Not Found");
             Images.Remove(Image);
+            return Image.ImageName;
         }
         public void SetSpecification(List<ProductSpecification> specifications)
         {
             specifications.ForEach(a => a.ProductId = Id);
             Specifications = specifications;
-        }
-        public void Guard(string title, string slug, string imageName, string description, IProductDomainService domainService)
+        } 
+        private void Guard(string title, string slug, string description, IProductDomainService domainService)
         {
             NullOrEmptyDomainDataException.CheckString(title, nameof(title));
-            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
             NullOrEmptyDomainDataException.CheckString(description, nameof(description));
             NullOrEmptyDomainDataException.CheckString(slug, nameof(slug));
 
