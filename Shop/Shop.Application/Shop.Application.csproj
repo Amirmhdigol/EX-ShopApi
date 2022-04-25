@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Roles\Edit\" />
-    <Folder Include="Roles\Create\" />
     <Folder Include="Sellers\DeleteInventory\" />
     <Folder Include="Sellers\EditInventory\" />
     <Folder Include="Sellers\AddInventory\" />
