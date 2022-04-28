@@ -1,6 +1,7 @@
 ﻿using Common.Domain;
 using Common.Domain.Bases;
 using Common.Domain.Exceptions;
+using Shop.Domain.SellerAgg.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,16 @@ namespace Shop.Domain.SellerAgg
         {
 
         }
-        public Seller(long userId, string shopName, string nationalCode)
+        public Seller(long userId, string shopName, string nationalCode, ISellerDomainService domainService)
         {
             Guard(shopName, nationalCode);
             UserId = userId;
             ShopName = shopName;
             NationalCode = nationalCode;
             Inventories = new List<SellerInventory>();
+
+            if (!domainService.CheckSellerInfo(this))
+                throw new InvalidDomainDataException("Information Is not valid");
         }
 
         public long UserId { get; private set; }
@@ -36,9 +40,14 @@ namespace Shop.Domain.SellerAgg
             Status = status;
             LastUpdate = DateTime.Now;
         }
-        public void Edit(string shopName, string nationalCode)
+        public void Edit(string shopName, string nationalCode, ISellerDomainService domainService)
         {
             Guard(shopName, nationalCode);
+
+            if (nationalCode != NationalCode)
+                if (domainService.NationalCodeExists(nationalCode))
+                    throw new InvalidDomainDataException("NCode Belongs to other person");
+
             ShopName = shopName;
             NationalCode = nationalCode;
         }
@@ -49,21 +58,22 @@ namespace Shop.Domain.SellerAgg
 
             Inventories.Add(inventory);
         }
-        public void EditInventory(SellerInventory inventory)
+        public void EditInventory(long inventoryId, int count, int price, int? discountPercentage)
         {
-            var currentInventory = Inventories.FirstOrDefault(a => a.Id == inventory.Id);
+            var currentInventory = Inventories.FirstOrDefault(a => a.Id == inventoryId);
             if (currentInventory == null)
-                return;
-            Inventories.Remove(currentInventory);
-            Inventories.Add(inventory);
+                throw new NullOrEmptyDomainDataException();
+
+            //TODO CheckInventory
+            currentInventory.Edit(count, price, discountPercentage);
         }
-        public void DeleteInventory(long InventoryId)
-        {
-            var currentInventory = Inventories.FirstOrDefault(a => a.Id == InventoryId);
-            if (currentInventory == null)
-                throw new NullOrEmptyDomainDataException("not founded");
-            Inventories.Remove(currentInventory);
-        }
+        //public void DeleteInventory(long InventoryId)
+        //{
+        //    var currentInventory = Inventories.FirstOrDefault(a => a.Id == InventoryId);
+        //    if (currentInventory == null)
+        //        throw new NullOrEmptyDomainDataException("not founded");
+        //    Inventories.Remove(currentInventory);
+        //}
         public void Guard(string shopName, string nationalCode)
         {
             NullOrEmptyDomainDataException.CheckString(shopName, nameof(shopName));
