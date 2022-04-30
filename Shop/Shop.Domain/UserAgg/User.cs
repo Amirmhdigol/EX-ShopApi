@@ -13,15 +13,15 @@ namespace Shop.Domain.UserAgg
 {
     public class User : BaseAggregate
     {
-        public User(string name, string family, string password, string email, string userAvatar, Gender gender, string phoneNumber
-            , IDomainUserServices domainServices)
+        public User(string name, string family, string password, string email, Gender gender, string phoneNumber
+            , IUserDomainService domainServices)
         {
             Guard(phoneNumber, email, domainServices);
             Name = name;
             Family = family;
             Password = password;
             Email = email;
-            UserAvatar = userAvatar;
+            UserAvatar = "avatar.png";
             Gender = gender;
             PhoneNumber = phoneNumber;
         }
@@ -38,20 +38,19 @@ namespace Shop.Domain.UserAgg
         public List<Wallet> Wallets { get; private set; }
         public List<UserRole> UserRoles { get; private set; }
 
-        public void Edit(string name, string family, string email, string userAvatar, Gender gender, string phoneNumber
-            , IDomainUserServices domainServices)
+        public void Edit(string name, string family, string email, Gender gender, string phoneNumber
+            , IUserDomainService domainServices)
         {
             Guard(phoneNumber, email, domainServices);
             Name = name;
             Family = family;
             Email = email;
-            UserAvatar = userAvatar;
             Gender = gender;
             PhoneNumber = phoneNumber;
         }
-        public static User RegisterUser(string eMail, string phoneNumber, string password, IDomainUserServices domainServices)
+        public static User RegisterUser(string phoneNumber, string password, IUserDomainService domainServices)
         {
-            return new User("", "", password, eMail, "", Gender.None, phoneNumber, domainServices);
+            return new User("", "", password,null, Gender.None, phoneNumber, domainServices);
         }
         public void AddAddress(UserAddress address)
         {
@@ -66,14 +65,20 @@ namespace Shop.Domain.UserAgg
 
             Addresses.Remove(ExistingAdderss);
         }
-        public void EditAddress(UserAddress address)
+        public void EditAddress(UserAddress address,long addressId)
         {
-            var OldAddress = Addresses.FirstOrDefault(A => A.Id == address.Id);
+            var OldAddress = Addresses.FirstOrDefault(A => A.Id == addressId);
             if (OldAddress == null)
                 throw new NullOrEmptyDomainDataException("Address Not Found");
 
-            Addresses.Remove(OldAddress);
-            Addresses.Add(address);
+            OldAddress.Edit(address.Provice, address.City, address.Name, address.Family, address.PostalAddress
+                , address.PostalCode, address.NationalCode, address.PhoneNumber);
+        }
+        public void SetImages(string imageName)
+        {
+            if (string.IsNullOrWhiteSpace(imageName))
+                imageName = "avatar.png";
+            UserAvatar = imageName;
         }
         public void ChargeWallet(Wallet wallet)
         {
@@ -86,7 +91,7 @@ namespace Shop.Domain.UserAgg
             UserRoles.Clear();
             UserRoles.AddRange(userRoles);
         }
-        public void Guard(string phoneNumber, string eMail, IDomainUserServices domainServices)
+        public void Guard(string phoneNumber, string eMail, IUserDomainService domainServices)
         {
             NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
             NullOrEmptyDomainDataException.CheckString(eMail, nameof(eMail));

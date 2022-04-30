@@ -1,6 +1,7 @@
 ﻿using Common.Domain;
 using Common.Domain.Bases;
 using Common.Domain.Exceptions;
+using Common.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace Shop.Domain.UserAgg
 {
     public class UserAddress : BaseEntity
     {
-        public UserAddress(string provice, string city, string name, string family, string postalAddress, string postalCode, string nationalCode, string phoneNumber, bool activeAddress)
+        public UserAddress(string provice, string city, string name, string family, string postalAddress
+            , string postalCode, string nationalCode, PhoneNumber phoneNumber)
         {
             Guard(provice, city, name, family, postalAddress, postalCode, nationalCode, phoneNumber);
             Provice = provice;
@@ -22,7 +24,7 @@ namespace Shop.Domain.UserAgg
             PostalCode = postalCode;
             NationalCode = nationalCode;
             PhoneNumber = phoneNumber;
-            ActiveAddress = activeAddress;
+            ActiveAddress = false;
         }
 
         public long UserId { get; internal set; }
@@ -33,11 +35,11 @@ namespace Shop.Domain.UserAgg
         public string PostalAddress { get; private set; }
         public string PostalCode { get; private set; }
         public string NationalCode { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public PhoneNumber PhoneNumber { get; private set; }
         public bool ActiveAddress { get; private set; }
 
         public void Edit(string provice, string city, string name, string family, string postalAddress, string postalCode
-            , string nationalCode, string phoneNumber)
+            , string nationalCode, PhoneNumber phoneNumber)
         {
             Guard(provice, city, name, family, postalAddress, postalCode, nationalCode, phoneNumber);
             Provice = provice;
@@ -54,9 +56,10 @@ namespace Shop.Domain.UserAgg
             ActiveAddress = true;
         }
         public void Guard(string provice, string city, string Name, string family, string postalAddress, string postalCode
-            , string nationalCode, string phoneNumber)
+            , string nationalCode, PhoneNumber phoneNumber)
         {
-            NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
+            if (phoneNumber == null)
+                throw new NullOrEmptyDomainDataException("");
             NullOrEmptyDomainDataException.CheckString(provice, nameof(provice));
             NullOrEmptyDomainDataException.CheckString(city, nameof(city));
             NullOrEmptyDomainDataException.CheckString(Name, nameof(Name));
