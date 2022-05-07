@@ -9,14 +9,14 @@ namespace Shop.Domain.SellerAgg.Repository
 {
     public interface ISellerRepository : IBaseRepository<Seller>
     {
-        Task<InventoryResult> GetInventoryById(long id);
+        Task<InventoryResult?> GetInventoryById(long id);
     }
     public class InventoryResult
     {
         public long Id { get; set; }
-        public long SellerId { get; internal set; }
-        public long ProductId { get; private set; }
-        public int Count { get; private set; }
-        public int Price { get; private set; }
+        public long SellerId { get;  set; }
+        public long ProductId { get;  set; }
+        public int Count { get;  set; }
+        public int Price { get;  set; }
     }
 }

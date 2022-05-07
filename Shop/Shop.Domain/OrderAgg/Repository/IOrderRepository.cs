@@ -9,6 +9,6 @@ namespace Shop.Domain.OrderAgg
 {
     public interface IOrderRepository : IBaseRepository<Order>
     {
-        Task<Order> GetCurrentUserOrder(long id);
+        Task<Order?> GetCurrentUserOrder(long id);
     }
 }
