@@ -17,7 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{69992C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Domain", "Common\Common.Domain\Common.Domain.csproj", "{D3635C98-C89E-45C6-9133-703407C5EA3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Application", "Common\Common.Application\Common.Application.csproj", "{960D5847-539D-4992-AFF7-2CFD0319A833}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Application", "Common\Common.Application\Common.Application.csproj", "{960D5847-539D-4992-AFF7-2CFD0319A833}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Query", "Common.Query\Common.Query.csproj", "{9A908C3E-AC67-49E4-B358-30210908ADDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{960D5847-539D-4992-AFF7-2CFD0319A833}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{960D5847-539D-4992-AFF7-2CFD0319A833}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{960D5847-539D-4992-AFF7-2CFD0319A833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A908C3E-AC67-49E4-B358-30210908ADDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A908C3E-AC67-49E4-B358-30210908ADDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A908C3E-AC67-49E4-B358-30210908ADDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A908C3E-AC67-49E4-B358-30210908ADDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{1643F8D1-DA00-40E0-B66E-1827FEDB5F1F} = {69F5241E-887C-4B72-81FD-BB466AE0E78F}
 		{D3635C98-C89E-45C6-9133-703407C5EA3E} = {69992CDC-9531-4F32-A860-0285C5FAFC30}
 		{960D5847-539D-4992-AFF7-2CFD0319A833} = {69992CDC-9531-4F32-A860-0285C5FAFC30}
+		{9A908C3E-AC67-49E4-B358-30210908ADDC} = {69992CDC-9531-4F32-A860-0285C5FAFC30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86AA53FE-3BC1-4318-A005-D44A027C2A59}
