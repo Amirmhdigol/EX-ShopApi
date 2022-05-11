@@ -34,7 +34,7 @@ internal class GetCommentByFilterQueryHandler : IQueryHandler<GetCommentByFilter
         var skip = (@params.PageId - 1) * @params.Take;
         var model = new CommentFilterResult()
         {
-            Data = await result.Skip(skip).Take(@params.Take).Select(a => a.Map()).ToListAsync(cancellationToken),
+            Data = await result.Skip(skip).Take(@params.Take).Select(a => a.MapFilterComment()).ToListAsync(cancellationToken),
             FilterParams = @params,
         };
         model.GeneratePaging(result, @params.Take, @params.PageId);
