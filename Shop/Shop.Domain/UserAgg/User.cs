@@ -13,6 +13,10 @@ namespace Shop.Domain.UserAgg
 {
     public class User : BaseAggregate
     {
+        private User()
+        {
+
+        }
         public User(string name, string family, string password, string email, Gender gender, string phoneNumber
             , IUserDomainService domainServices)
         {

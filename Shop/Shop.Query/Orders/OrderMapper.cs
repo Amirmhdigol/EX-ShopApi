@@ -32,7 +32,7 @@ internal static class OrderMapper
     {
         using var connection = dapperContext.CreateConnection();
         var sql = $"SELECT s.ShopName ,o.OrderId ,o.InventoryId ,o.Count ,o.Price ," +
-            $"p.Title as [Product.Title] ,p.Slug as [Product.Slug] ,p.ImageName as [Product.ImageName] " +
+            $"p.Title as ProductTitle ,p.Slug as ProductSlug ,p.ImageName as ProductImageName " +
             $"FROM {dapperContext.OrderItems} o " +
             $"INNER JOIN {dapperContext.Inventories} i on o.InventoryId=i.Id " +
             $"INNER JOIN {dapperContext.Products} p on i.ProductId=p.id " +

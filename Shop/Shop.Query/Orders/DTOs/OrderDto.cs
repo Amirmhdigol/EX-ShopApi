@@ -21,15 +21,11 @@ public class OrderDto : BaseDTO
     public ShippingMethod? ShippingMethod { get; set; }
     public DateTime? LastUpdate { get; set; }
 }
-public class ProductOrderItem
-{
-    public string ProductTitle { get; set; }
-    public string Slug { get; set; }
-    public string ImageName { get; set; }
-}
 public class OrderItemDto : BaseDTO
 {
-    public ProductOrderItem Product { get; set; }
+    public string ProductTitle { get; set; }
+    public string ProductSlug { get; set; }
+    public string ProductImageName { get; set; }
     public string ShopName { get; set; }
     public long OrderId { get; set; }
     public long InventoryId { get; set; }

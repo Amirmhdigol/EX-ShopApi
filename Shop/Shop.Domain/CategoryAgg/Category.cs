@@ -13,6 +13,10 @@ namespace Shop.Domain.CategoryAgg
 {
     public class Category : BaseAggregate
     {
+        private Category()
+        {
+
+        }
         public Category(string title, SeoData seoData, string slug, ICategoryDomainService domainService)
         {
             slug = slug?.ToSlug();
