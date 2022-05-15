@@ -61,29 +61,16 @@ public static class ProductMapper
     }
     public static async Task SetCategories(this ProductDTO productDTO, ShopContext shopContext)
     {
-        var Categories = await shopContext.Categories
-            .Where(c => c.Id == productDTO.Category.Id)
+        var categories = await shopContext.Categories
+            .Where(r => r.Id == productDTO.Category.Id || r.Id == productDTO.SubCategory.Id)
             .Select(s => new ProductCategoryDTO()
             {
                 Id = s.Id,
+                Slug = s.Slug,
                 ParentId = s.ParentId,
                 SeoData = s.SeoData,
-                Slug = s.Slug,
-                Title = s.Title,
-            })
-            .FirstOrDefaultAsync();
-
-        var SubCategories = await shopContext.Categories
-            .Where(c => c.Id == productDTO.SubCategory.Id)
-            .Select(s => new ProductCategoryDTO()
-            {
-                Id = s.Id,
-                ParentId = s.ParentId,
-                SeoData = s.SeoData,
-                Slug = s.Slug,
-                Title = s.Title,
-            })
-            .FirstOrDefaultAsync();
+                Title = s.Title
+            }).ToListAsync();
 
         if (productDTO.SecondrySubCategory != null)
         {
@@ -102,11 +89,7 @@ public static class ProductMapper
             if (SecondarySubCategories != null)
                 productDTO.SecondrySubCategory = SecondarySubCategories;
         }
-
-        if (Categories != null)
-            productDTO.Category = Categories;
-
-        if (SubCategories != null)
-            productDTO.SubCategory = SubCategories;
+        productDTO.Category = categories.First(r => r.Id == productDTO.Category.Id);
+        productDTO.SubCategory = categories.First(r => r.Id == productDTO.SubCategory.Id);
     }
 }
