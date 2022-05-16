@@ -14,7 +14,7 @@ public class UserDTO : BaseDTO
     public string PhoneNumber { get; set; }
     public List<UserRoleDTO> UserRoles { get; set; }
 }
-public class UserRoleDTO : BaseDTO
+public class UserRoleDTO 
 {
     public string RoleTitle { get; set; }
     public long RoleId { get; set; }

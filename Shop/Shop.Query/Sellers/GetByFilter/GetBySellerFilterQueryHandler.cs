@@ -5,14 +5,14 @@ using Shop.Query.Sellers.DTOs;
 
 namespace Shop.Query.Sellers.GetByFilter;
 
-internal class GetBySellerFilterQueryHandler : IQueryHandler<GetBySellerFilterQuery, SellerFilterResult>
+internal class GetSellerByFilterQueryHandler : IQueryHandler<GetSellerByFilterQuery, SellerFilterResult>
 {
     private readonly ShopContext _context;
-    public GetBySellerFilterQueryHandler(ShopContext context)
+    public GetSellerByFilterQueryHandler(ShopContext context)
     {
         _context = context;
     }
-    public async Task<SellerFilterResult> Handle(GetBySellerFilterQuery request, CancellationToken cancellationToken)
+    public async Task<SellerFilterResult> Handle(GetSellerByFilterQuery request, CancellationToken cancellationToken)
     {
         var parameters = request.FilterParams;
         var result = _context.Sellers.OrderByDescending(a => a.Id).AsQueryable();

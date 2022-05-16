@@ -21,8 +21,6 @@ public static class UserMapper
             UserAvatar = user.UserAvatar,
             UserRoles = user.UserRoles.Select(a => new UserRoleDTO()
             {
-                Id = a.Id,
-                CreationDate = a.CreationDate,
                 RoleId = a.RoleId,
                 RoleTitle = ""
             }).ToList()
