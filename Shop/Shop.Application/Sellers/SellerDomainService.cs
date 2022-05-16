@@ -1,23 +1,26 @@
 ﻿using Shop.Domain.SellerAgg;
+using Shop.Domain.SellerAgg.Repository;
 using Shop.Domain.SellerAgg.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Application.Sellers
 {
     public class SellerDomainService : ISellerDomainService
     {
+        private readonly ISellerRepository _repository;
+        public SellerDomainService(ISellerRepository repository)
+        {
+            _repository = repository;
+        }
+
         public bool CheckSellerInfo(Seller seller)
         {
-            throw new NotImplementedException();
+            var Exists = _repository.Exists(n => n.NationalCode == seller.NationalCode || n.UserId == seller.UserId);
+            return !Exists;
         }
 
         public bool NationalCodeExists(string code)
         {
-            throw new NotImplementedException();
+            return _repository.Exists(nc => nc.NationalCode == code);
         }
     }
 }
