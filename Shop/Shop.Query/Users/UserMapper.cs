@@ -19,6 +19,7 @@ public static class UserMapper
             Password = user.Password,
             PhoneNumber = user.PhoneNumber,
             UserAvatar = user.UserAvatar,
+            IsActive = user.IsActive,
             UserRoles = user.UserRoles.Select(a => new UserRoleDTO()
             {
                 RoleId = a.RoleId,

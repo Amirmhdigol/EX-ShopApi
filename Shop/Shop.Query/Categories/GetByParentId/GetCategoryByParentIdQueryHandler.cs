@@ -14,7 +14,8 @@ namespace Shop.Query.Categories.GetByParentId
         }
         public async Task<List<CategoryChildDto>> Handle(GetCategoryByParentIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _context.Categories.Where(a => a.ParentId == request.ParentId).ToListAsync(cancellationToken);
+            var result = await _context.Categories.Include(a=>a.Childs)
+                .Where(a => a.ParentId == request.ParentId).ToListAsync(cancellationToken);
             return result.MapChildren();
         }
     }

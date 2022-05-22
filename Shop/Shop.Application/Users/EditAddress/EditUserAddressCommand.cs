@@ -22,7 +22,7 @@ public class EditUserAddressCommand : IBaseCommand
         NationalCode = nationalCode;
         PhoneNumber = phoneNumber;
     }
-    public long UserId { get; private set; }
+    public long UserId { get; set; }
     public long Id { get; set; }
     public string Province { get; private set; }
     public string City { get; private set; }

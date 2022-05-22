@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Categories.AddChild
 {
-    public record AddCategoryChildCommand(long ParentId, string Title, SeoData SeoData, string Slug) : IBaseCommand;
+    public record AddCategoryChildCommand(long ParentId, string Title, SeoData SeoData, string Slug) : IBaseCommand<long>;
 }

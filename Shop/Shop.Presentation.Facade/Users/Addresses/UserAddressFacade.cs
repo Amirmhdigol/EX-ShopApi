@@ -3,8 +3,10 @@ using MediatR;
 using Shop.Application.Users.AddAddress;
 using Shop.Application.Users.DeleteAddress;
 using Shop.Application.Users.EditAddress;
+using Shop.Query.Users.Addresses.DTOs;
+using Shop.Query.Users.Addresses.GetById;
+using Shop.Query.Users.Addresses.GetList;
 namespace Shop.Presentation.Facade.Users.Addresses;
-
 internal class UserAddressFacade : IUserAddressFacade
 {
     private readonly IMediator _mediator;
@@ -26,5 +28,15 @@ internal class UserAddressFacade : IUserAddressFacade
     public async Task<OperationResult> EditAddress(EditUserAddressCommand command)
     {
         return await _mediator.Send(command);
+    }
+
+    public async Task<AddressDTO?> GetAddressById(long userAddressId)
+    {
+        return await _mediator.Send(new GetUserAddressByIdQuery(userAddressId));
+    }
+
+    public async Task<List<AddressDTO>> GetAddressesList(long userId)
+    {
+        return await _mediator.Send(new GetUserAddressesListQuery(userId));
     }
 }

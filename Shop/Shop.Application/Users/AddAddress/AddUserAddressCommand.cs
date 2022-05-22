@@ -24,7 +24,7 @@ namespace Shop.Application.Users.AddAddress
             PhoneNumber = phoneNumber;
         }
 
-        public long UserId { get; internal set; }
+        public long UserId { get; set; }
         public string Province { get; private set; }
         public string City { get; private set; }
         public string Name { get; private set; }

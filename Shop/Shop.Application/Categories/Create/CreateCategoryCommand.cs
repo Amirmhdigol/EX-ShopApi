@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Categories.Create
 {
-    public record CreateCategoryCommand(string Title, SeoData SeoData, string Slug) : IBaseCommand;
+    public record CreateCategoryCommand(string Title, SeoData SeoData, string Slug) : IBaseCommand<long>;
 }

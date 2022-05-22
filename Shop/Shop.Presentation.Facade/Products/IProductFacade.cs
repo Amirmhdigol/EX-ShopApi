@@ -16,6 +16,6 @@ public interface IProductFacade
 
     //Queries
     Task<ProductDTO?> GetProductById(long productId);
-    Task<ProductFilterResult?> GetProductByFilter(ProductFilterParams filterParams);
+    Task<ProductFilterResult> GetProductByFilter(ProductFilterParams filterParams);
     Task<ProductDTO?> GetProductBySlug(string slug);
 }

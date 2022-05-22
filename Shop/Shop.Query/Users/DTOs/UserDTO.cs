@@ -11,6 +11,7 @@ public class UserDTO : BaseDTO
     public string Email { get; set; }
     public string UserAvatar { get; set; }
     public Gender Gender { get; set; }
+    public bool IsActive { get; set; }
     public string PhoneNumber { get; set; }
     public List<UserRoleDTO> UserRoles { get; set; }
 }

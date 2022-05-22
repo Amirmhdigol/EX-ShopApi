@@ -28,7 +28,7 @@ public static class CategoryMapper
     public static List<CategoryDto> Map(this List<Category> categories)
     {
         var model = new List<CategoryDto>();
-        
+
         categories.ForEach(category =>
         {
             model.Add(new CategoryDto()

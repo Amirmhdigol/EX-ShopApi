@@ -28,12 +28,14 @@ namespace Shop.Domain.UserAgg
             UserAvatar = "avatar.png";
             Gender = gender;
             PhoneNumber = phoneNumber;
+            IsActive = true;
         }
 
         public string Name { get; private set; }
         public string Family { get; private set; }
         public string Password { get; private set; }
         public string Email { get; private set; }
+        public bool IsActive { get; set; }
         public string UserAvatar { get; private set; }
         public Gender Gender { get; private set; }
         public string PhoneNumber { get; private set; }
@@ -54,7 +56,7 @@ namespace Shop.Domain.UserAgg
         }
         public static User RegisterUser(string phoneNumber, string password, IUserDomainService domainServices)
         {
-            return new User("", "", password,null, Gender.None, phoneNumber, domainServices);
+            return new User("", "", password, null, Gender.None, phoneNumber, domainServices);
         }
         public void AddAddress(UserAddress address)
         {
@@ -69,7 +71,7 @@ namespace Shop.Domain.UserAgg
 
             Addresses.Remove(ExistingAdderss);
         }
-        public void EditAddress(UserAddress address,long addressId)
+        public void EditAddress(UserAddress address, long addressId)
         {
             var OldAddress = Addresses.FirstOrDefault(A => A.Id == addressId);
             if (OldAddress == null)
@@ -98,13 +100,13 @@ namespace Shop.Domain.UserAgg
         public void Guard(string phoneNumber, string eMail, IUserDomainService domainServices)
         {
             NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
-            NullOrEmptyDomainDataException.CheckString(eMail, nameof(eMail));
 
             if (phoneNumber.Length != 11)
                 throw new InvalidDomainDataException("Phone number is invalid");
 
-            if (!eMail.IsValidEmail())
-                throw new InvalidDomainDataException("Email is invalid");
+            if (string.IsNullOrWhiteSpace(eMail))
+                if (!eMail.IsValidEmail())
+                    throw new InvalidDomainDataException("Email is invalid");
 
             if (phoneNumber != PhoneNumber)
                 if (domainServices.PhoneNumberExists(phoneNumber))
