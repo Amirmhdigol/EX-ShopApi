@@ -18,13 +18,14 @@
                 Data = data,
             };
         }
-        public static OperationResult<TData> NotFound()
+        public static OperationResult<TData> NotFound(string? message = "not found")
         {
             return new OperationResult<TData>()
             {
                 Status = OperationResultStatus.NotFound,
                 Title = "NotFound",
                 Data = default(TData),
+                Message = message
             };
         }
         public static OperationResult<TData> Error(string message = ErrorMessage)

@@ -29,6 +29,10 @@ namespace Shop.Domain.UserAgg
             Gender = gender;
             PhoneNumber = phoneNumber;
             IsActive = true;
+            UserRoles = new();
+            Addresses = new();
+            Wallets = new();
+            UserTokens = new();
         }
 
         public string Name { get; private set; }
@@ -40,9 +44,10 @@ namespace Shop.Domain.UserAgg
         public Gender Gender { get; private set; }
         public string PhoneNumber { get; private set; }
 
-        public List<UserAddress> Addresses { get; private set; }
-        public List<Wallet> Wallets { get; private set; }
-        public List<UserRole> UserRoles { get; private set; }
+        public List<UserAddress> Addresses { get; }
+        public List<Wallet> Wallets { get; }
+        public List<UserRole> UserRoles { get; }
+        public List<UserToken> UserTokens { get; }
 
         public void Edit(string name, string family, string email, Gender gender, string phoneNumber
             , IUserDomainService domainServices)
@@ -97,6 +102,25 @@ namespace Shop.Domain.UserAgg
             UserRoles.Clear();
             UserRoles.AddRange(userRoles);
         }
+        public void AddToken(string hashedJwtToken, string hashedRefreshToken, DateTime tokenExpireDate
+            , DateTime refreshTokenExpireDate, string device)
+        {
+            var activeTokensCount = UserTokens.Count(c => c.RefreshTokenExpireDate > DateTime.Now);
+            if (activeTokensCount == 3)
+                throw new InvalidDomainDataException("You cannot use 4 devices at time");
+
+            var token = new UserToken(hashedJwtToken, hashedRefreshToken, tokenExpireDate, refreshTokenExpireDate, device)
+            {
+                UserId = Id
+            };
+            UserTokens.Add(token);
+        }
+        public void RemoveToken(long tokenId)
+        {
+            var token = UserTokens.FirstOrDefault(a => a.Id == tokenId);
+            if (token == null) throw new InvalidDomainDataException("Invalid Token id");
+            UserTokens.Remove(token);
+        }
         public void Guard(string phoneNumber, string eMail, IUserDomainService domainServices)
         {
             NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
@@ -104,7 +128,7 @@ namespace Shop.Domain.UserAgg
             if (phoneNumber.Length != 11)
                 throw new InvalidDomainDataException("Phone number is invalid");
 
-            if (string.IsNullOrWhiteSpace(eMail))
+            if (!string.IsNullOrWhiteSpace(eMail))
                 if (!eMail.IsValidEmail())
                     throw new InvalidDomainDataException("Email is invalid");
 

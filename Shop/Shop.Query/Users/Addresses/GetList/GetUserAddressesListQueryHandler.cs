@@ -12,7 +12,7 @@ public class GetUserAddressesListQueryHandler : IQueryHandler<GetUserAddressesLi
     {
         _context = context;
     }
-    ]
+    
     public async Task<List<AddressDTO>> Handle(GetUserAddressesListQuery request, CancellationToken cancellationToken)
     {
         var sql = $"Select * from {_context.UserAddresses} where UserId=@userId";

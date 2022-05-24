@@ -10,7 +10,7 @@ public interface IUserAddressFacade
     Task<OperationResult> AddAddress(AddUserAddressCommand command);
     Task<OperationResult> EditAddress(EditUserAddressCommand command);
     Task<OperationResult> DeleteAddress(DeleteUserAddressCommand command);
-
+        
     Task<AddressDTO?> GetAddressById(long userAddressId);
     Task<List<AddressDTO>> GetAddressesList(long userId);
 }
