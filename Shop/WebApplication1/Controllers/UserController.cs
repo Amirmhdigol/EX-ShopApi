@@ -8,6 +8,8 @@ using Shop.Presentation.Facade.Users;
 using Shop.Query.Users.DTOs;
 
 namespace Shop.Api.Controllers;
+
+[PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
 public class UserController : ApiController
 {
     private readonly IUserFacade _facade;

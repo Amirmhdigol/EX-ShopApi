@@ -22,24 +22,28 @@ public class SellerController : ApiController
     }
 
     [HttpPost]
+    [PermissionChecker(Domain.RoleAgg.Permission.Seller_Management)]
     public async Task<ApiResult> CreateSeller(CreateSellerCommand command)
     {
         return CommandResult(await _sellerFacade.Create(command));
     }
 
     [HttpPut]
+    [PermissionChecker(Domain.RoleAgg.Permission.Seller_Management)]
     public async Task<ApiResult> EditSeller(EditSellerCommand command)
     {
         return CommandResult(await _sellerFacade.Edit(command));
     }
 
     [HttpPost("addInventory")]
+    [PermissionChecker(Domain.RoleAgg.Permission.Add_Inventory)]
     public async Task<ApiResult> AddSellerInventory(AddSellerInventoryCommand command)
     {
         return CommandResult(await _inventoryFacade.AddInventory(command));
     }
 
     [HttpPut("editInventory")]
+    [PermissionChecker(Domain.RoleAgg.Permission.Edit_Inventory)]
     public async Task<ApiResult> EditSellerInventory(EditInventoryCommand command)
     {
         return CommandResult(await _inventoryFacade.EditInventory(command));
@@ -52,6 +56,7 @@ public class SellerController : ApiController
     }
 
     [HttpGet]
+    [PermissionChecker(Domain.RoleAgg.Permission.Seller_Management)]
     public async Task<ApiResult<SellerFilterResult>> GetSellersByFilter(SellerFilterParams filterParams)
     {
         return QueryResult(await _sellerFacade.GetSellersByFilter(filterParams));

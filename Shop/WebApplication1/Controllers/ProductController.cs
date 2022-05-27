@@ -1,14 +1,18 @@
-﻿using Common.AspNetCore;
+﻿global using Shop.Api.Infrastructure.Security;
+using Common.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
 using Shop.Application.Products.RemoveImage;
+using Shop.Domain.RoleAgg;
 using Shop.Presentation.Facade.Products;
 using Shop.Query.Products.DTOs;
 
 namespace Shop.Api.Controllers;
+
+[PermissionChecker(Permission.CRUD_Product)]
 public class ProductController : ApiController
 {
     private readonly IProductFacade _facade;
@@ -18,6 +22,7 @@ public class ProductController : ApiController
         _facade = facade;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ApiResult<ProductFilterResult>> GetProductsByFilter([FromQuery] ProductFilterParams filterParams)
     {
@@ -31,6 +36,7 @@ public class ProductController : ApiController
     }
 
     [HttpGet("{slug}")]
+    [AllowAnonymous]
     public async Task<ApiResult<ProductDTO?>> GetProductBySlug(string slug)
     {
         return QueryResult(await _facade.GetProductBySlug(slug));

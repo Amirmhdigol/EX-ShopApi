@@ -4,6 +4,7 @@ using Common.Application.FileUtil.Services;
 using Common.AspNetCore;
 using Common.AspNetCore.Middlewares;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure;
 using Shop.Api.Infrastructure.JWT.Util;
 using Shop.Config;
 
@@ -32,8 +33,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaulConnection");
+
 builder.Services.RegisterShopDependency(connectionString);
+builder.Services.RegisterApiDependency();
 CommonBootstrapper.Init(builder.Services);
+
 builder.Services.AddTransient<IFileService, FileService>();
 
 builder.Services.AddControllersWithViews()

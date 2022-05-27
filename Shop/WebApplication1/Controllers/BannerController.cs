@@ -2,18 +2,20 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.SiteEntities.Banners.Create;
 using Shop.Application.SiteEntities.Banners.Edit;
+using Shop.Domain.RoleAgg;
 using Shop.Presentation.Facade.SiteEntities.Banners;
 using Shop.Query.SiteEntities.DTOs;
 
 namespace Shop.Api.Controllers;
 
-[Authorize]
+[PermissionChecker(Permission.CRUD_Banner)]
 public class BannerController : ApiController
 {
     private readonly IBannerFacade _facade;
-
+  
     public BannerController(IBannerFacade facade)
     {
         _facade = facade;

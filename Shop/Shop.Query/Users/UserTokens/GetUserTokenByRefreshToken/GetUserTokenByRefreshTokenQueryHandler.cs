@@ -3,7 +3,7 @@ using Dapper;
 using Shop.Infrastructure.Persistent.Dapper;
 using Shop.Query.Users.DTOs;
 
-namespace Shop.Query.Users.UserTokens;
+namespace Shop.Query.Users.UserTokens.GetUserTokenByRefreshToken;
 
 public class GetUserTokenByRefreshTokenQueryHandler : IQueryHandler<GetUserTokenByRefreshTokenQuery, UserTokenDTO>
 {
@@ -18,6 +18,6 @@ public class GetUserTokenByRefreshTokenQueryHandler : IQueryHandler<GetUserToken
         using var connection = _dapper.CreateConnection();
         var sql = $"SELECT TOP(1) * FROM {_dapper.UserTokens} WHERE HashedRefreshToken=@hashRefreshToken";
 
-        return await connection.QueryFirstOrDefaultAsync<UserTokenDTO>(sql, new { hashRefreshToken = request.HashedRefreshToken});
+        return await connection.QueryFirstOrDefaultAsync<UserTokenDTO>(sql, new { hashRefreshToken = request.HashedRefreshToken });
     }
-} 
+}

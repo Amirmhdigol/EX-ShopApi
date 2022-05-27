@@ -8,6 +8,7 @@ using Shop.Query.Roles.DTOs;
 
 namespace Shop.Api.Controllers;
 
+[PermissionChecker(Domain.RoleAgg.Permission.Role_Management)]
 public class RoleController : ApiController
 {
     private readonly IRoleFacade _facade;

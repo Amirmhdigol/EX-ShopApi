@@ -11,6 +11,7 @@ using Shop.Query.Users.Addresses.DTOs;
 
 namespace Shop.Api.Controllers;
 
+[Authorize]
 public class UserAddressController : ApiController
 {
     private readonly IUserAddressFacade _facade;

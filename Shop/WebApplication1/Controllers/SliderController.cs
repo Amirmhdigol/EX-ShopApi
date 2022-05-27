@@ -8,6 +8,7 @@ using Shop.Query.SiteEntities.DTOs;
 
 namespace Shop.Api.Controllers;
 
+[PermissionChecker(Domain.RoleAgg.Permission.CRUD_Slider)]
 public class SliderController : ApiController
 {
     private readonly ISliderFacade _facade;
@@ -29,6 +30,7 @@ public class SliderController : ApiController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ApiResult<List<SliderDTO>>> GetSlidersList()
     {
         return QueryResult(await _facade.GetSlidersList());

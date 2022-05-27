@@ -2,6 +2,8 @@
 using Common.Application.SecurityUtil;
 using Common.AspNetCore;
 using Common.Domain.ValueObjects;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.JWT.Util;
@@ -63,6 +65,19 @@ public class AuthController : ApiController
         var tokenResult = await AddTokenAndGenerateJwt(user);
 
         return CommandResult(tokenResult);
+    }
+
+    [Authorize]
+    [HttpDelete("LogOut")]
+    public async Task<ApiResult> LogOut()
+    {
+        var token = await HttpContext.GetTokenAsync("access_token");
+        var result = await _userFacade.GetTokenByJwtToken(token);
+
+        if (result == null) return CommandResult(OperationResult.NotFound());
+
+        await _userFacade.RemoveToken(new RemoveUserTokenCommand(result.Id, result.UserId));
+        return CommandResult(OperationResult.Success());
     }
 
     private async Task<OperationResult<LoginResultDTO?>> AddTokenAndGenerateJwt(UserDTO user)
