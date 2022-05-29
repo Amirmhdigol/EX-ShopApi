@@ -25,6 +25,7 @@ public class AuthController : ApiController
         _userFacade = facade;
         _configuration = configuration;
     }
+
     [HttpPost("Login")]
     public async Task<ApiResult<LoginResultDTO?>> Login(LoginViewModel viewModel)
     {

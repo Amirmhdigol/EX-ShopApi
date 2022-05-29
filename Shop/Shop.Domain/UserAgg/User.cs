@@ -59,6 +59,12 @@ namespace Shop.Domain.UserAgg
             Gender = gender;
             PhoneNumber = phoneNumber;
         }
+        public void ChangePassword(string newPassword)
+        {
+            NullOrEmptyDomainDataException.CheckString(newPassword, nameof(newPassword));
+
+            Password = newPassword;
+        }
         public static User RegisterUser(string phoneNumber, string password, IUserDomainService domainServices)
         {
             return new User("", "", password, null, Gender.None, phoneNumber, domainServices);

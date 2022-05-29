@@ -29,6 +29,13 @@ public class ProductController : ApiController
         return QueryResult(await _facade.GetProductByFilter(filterParams));
     }
 
+    [AllowAnonymous]
+    [HttpGet("Shop")]
+    public async Task<ApiResult<ProductShopResult>> GetProductsForShopByFilter([FromQuery] ProductShopFilterParam filterParams)
+    {
+        return QueryResult(await _facade.GetProductsForShopByFilter(filterParams));
+    }
+
     [HttpGet("{productId}")]
     public async Task<ApiResult<ProductDTO?>> GetProductsById(long productId)
     {

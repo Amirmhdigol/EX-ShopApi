@@ -30,6 +30,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
 
@@ -60,6 +63,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
@@ -89,6 +95,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime2");
 
@@ -113,6 +122,9 @@ namespace Shop.Infrastructure.Migrations
 
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -155,6 +167,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -172,6 +187,9 @@ namespace Shop.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
@@ -206,6 +224,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ImageName")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -231,6 +252,9 @@ namespace Shop.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -259,6 +283,9 @@ namespace Shop.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -372,6 +399,9 @@ namespace Shop.Infrastructure.Migrations
                                 .HasMaxLength(35)
                                 .HasColumnType("nvarchar(35)");
 
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
                             b1.Property<string>("Family")
                                 .IsRequired()
                                 .HasMaxLength(50)
@@ -432,6 +462,9 @@ namespace Shop.Infrastructure.Migrations
 
                             b1.Property<int>("Count")
                                 .HasColumnType("int");
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<long>("InventoryId")
                                 .HasColumnType("bigint");
@@ -557,6 +590,9 @@ namespace Shop.Infrastructure.Migrations
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
 
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
                             b1.Property<string>("ImageName")
                                 .IsRequired()
                                 .HasMaxLength(100)
@@ -583,6 +619,9 @@ namespace Shop.Infrastructure.Migrations
                                 .HasColumnType("bigint");
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<string>("Key")
                                 .IsRequired()
@@ -623,6 +662,9 @@ namespace Shop.Infrastructure.Migrations
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
 
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
                             b1.Property<int>("Permission")
                                 .HasColumnType("int");
 
@@ -649,6 +691,9 @@ namespace Shop.Infrastructure.Migrations
 
                             b1.Property<int>("Count")
                                 .HasColumnType("int");
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<int?>("DiscountPercentage")
                                 .HasColumnType("int");
@@ -697,6 +742,9 @@ namespace Shop.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<string>("Family")
                                 .IsRequired()
@@ -773,6 +821,9 @@ namespace Shop.Infrastructure.Migrations
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
 
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
                             b1.Property<long>("RoleId")
                                 .HasColumnType("bigint");
 
@@ -793,6 +844,9 @@ namespace Shop.Infrastructure.Migrations
                                 .HasColumnType("bigint");
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<string>("Device")
                                 .IsRequired()
@@ -838,6 +892,9 @@ namespace Shop.Infrastructure.Migrations
                                 .HasColumnType("bigint");
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<string>("Description")
                                 .HasMaxLength(500)
