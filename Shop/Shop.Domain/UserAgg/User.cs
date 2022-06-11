@@ -88,7 +88,7 @@ namespace Shop.Domain.UserAgg
             if (OldAddress == null)
                 throw new NullOrEmptyDomainDataException("Address Not Found");
 
-            OldAddress.Edit(address.Provice, address.City, address.Name, address.Family, address.PostalAddress
+            OldAddress.Edit(address.Province, address.City, address.Name, address.Family, address.PostalAddress
                 , address.PostalCode, address.NationalCode, address.PhoneNumber);
         }
         public void SetImages(string imageName)

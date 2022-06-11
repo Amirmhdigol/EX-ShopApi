@@ -17,5 +17,6 @@ public interface IOrderFacade
 
     //Queries
     Task<OrderDto?> GetOrderById(long orderId);
+    Task<OrderDto?> GetCurrentOrder(long userId);
     Task<OrderFilterResult> GetOrdersByFilter(OrderFilterParams filterParams);
 }

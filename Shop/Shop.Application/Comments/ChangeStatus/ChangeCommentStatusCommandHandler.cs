@@ -15,7 +15,7 @@ namespace Shop.Application.Comments.ChangeStatus
             var Comment = await _repository.GetTracking(request.Id);
             if (Comment == null)
                 return OperationResult.NotFound();
-            Comment.ChangeStatus(request.status);
+            Comment.ChangeStatus(request.Status);
             await _repository.Save();
             return OperationResult.Success();
         }

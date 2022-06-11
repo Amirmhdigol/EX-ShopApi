@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Comments.ChangeStatus
 {
-    public record ChangeCommentStatusCommand(long Id, CommentStatus status) : IBaseCommand;
+    public record ChangeCommentStatusCommand(long Id, CommentStatus Status) : IBaseCommand;
 }

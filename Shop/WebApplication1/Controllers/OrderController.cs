@@ -38,6 +38,13 @@ public class OrderController : ApiController
         return QueryResult(result);
     }
 
+    [HttpGet("current")]
+    public async Task<ApiResult<OrderDto?>> GetCurrentOrder()
+    {
+        var result = await _facade.GetCurrentOrder(User.GetUserId());
+        return QueryResult(result);
+    }
+
     [HttpPost]
     public async Task<ApiResult> AddOrderItem(AddOrderItemCommand command)
     {

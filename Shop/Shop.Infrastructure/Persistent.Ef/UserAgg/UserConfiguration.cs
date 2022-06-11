@@ -59,7 +59,7 @@ namespace Shop.Infrastructure.Persistent.Ef.UserAgg
                 option.HasIndex(b => b.UserId);
                 option.ToTable("Addresses", "user");
 
-                option.Property(b => b.Provice)
+                option.Property(b => b.Province)
                      .IsRequired().HasMaxLength(100);
 
                 option.Property(b => b.City)

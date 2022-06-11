@@ -49,7 +49,7 @@ internal class UserFacade : IUserFacade
     public async Task<UserTokenDTO?> GetTokenByJwtToken(string jwtToken)
     {
         var HashedJwtToken = Sha256Hasher.Hash(jwtToken);
-        return await _mediator.Send(new GetTokenByJwtTokenQuery(jwtToken));
+        return await _mediator.Send(new GetTokenByJwtTokenQuery(HashedJwtToken));
     }
 
     public async Task<UserTokenDTO?> GetTokenByRefreshToken(string refreshToken)

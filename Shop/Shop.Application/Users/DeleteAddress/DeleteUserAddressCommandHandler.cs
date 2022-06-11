@@ -6,6 +6,12 @@ namespace Shop.Application.Users.DeleteAddress
     internal class DeleteUserAddressCommandHandler : IBaseCommandHandler<DeleteUserAddressCommand>
     {
         private readonly IUserRepository _repository;
+
+        public DeleteUserAddressCommandHandler(IUserRepository repository)
+        {
+            _repository = repository;
+        }
+
         public async Task<OperationResult> Handle(DeleteUserAddressCommand request, CancellationToken cancellationToken)
         {
             var user = await _repository.GetTracking(request.UserId);

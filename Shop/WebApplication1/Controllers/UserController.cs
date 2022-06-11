@@ -34,7 +34,7 @@ public class UserController : ApiController
     [HttpPut("Current")]
     public async Task<ApiResult> EditUser([FromForm] EditUserViewModel command)
     {
-        var commandModel = new EditUserCommand(User.GetUserId(), command.Avatar, command.Name, command.Family, null
+        var commandModel = new EditUserCommand(User.GetUserId(), command.Avatar, command.Name, command.Family
             , command.Email, command.Gender, command.PhoneNumber);
 
         var result = await _facade.EditUser(commandModel);
@@ -45,6 +45,7 @@ public class UserController : ApiController
     [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
     public async Task<ApiResult> EditUser(EditUserCommand command)
     {
+        command.UserId = User.GetUserId();
         return CommandResult(await _facade.EditUser(command));
     }
 
@@ -73,7 +74,7 @@ public class UserController : ApiController
 
     [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
     [HttpGet]
-    public async Task<ApiResult<UserFilterResult>> GetUsersByFilter([FromForm] UserFilterParams filterParams)
+    public async Task<ApiResult<UserFilterResult>> GetUsersByFilter([FromQuery] UserFilterParams filterParams)
     {
         return QueryResult(await _facade.GetUserByFilter(filterParams));
     }

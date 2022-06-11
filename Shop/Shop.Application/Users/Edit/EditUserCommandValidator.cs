@@ -9,10 +9,6 @@ namespace Shop.Application.Users.Edit
         {
             RuleFor(a => a.PhoneNumber).ValidPhoneNumber();
             RuleFor(a => a.Email).EmailAddress().WithMessage("Email Is not valid");
-
-            RuleFor(f => f.Password)
-                .MinimumLength(4).WithMessage("Password is too short");
-
             RuleFor(i => i.Avatar).JustImageFile();
         }
     }

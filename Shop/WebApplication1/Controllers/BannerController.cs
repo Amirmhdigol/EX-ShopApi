@@ -40,9 +40,9 @@ public class BannerController : ApiController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ApiResult<List<BannerDTO>>> GetBannersList()
     {
         return QueryResult(await _facade.GetBannersList());
     }
-
 }

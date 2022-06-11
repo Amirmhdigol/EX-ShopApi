@@ -77,16 +77,22 @@ public class AuthController : ApiController
 
         if (result == null) return CommandResult(OperationResult.NotFound());
 
-        await _userFacade.RemoveToken(new RemoveUserTokenCommand(result.Id, result.UserId));
+        await _userFacade.RemoveToken(new RemoveUserTokenCommand(result.UserId, result.Id));
         return CommandResult(OperationResult.Success());
     }
 
     private async Task<OperationResult<LoginResultDTO?>> AddTokenAndGenerateJwt(UserDTO user)
     {
         var uaParser = Parser.GetDefault();
-        var info = uaParser.Parse(HttpContext.Request.Headers["user-agent"]);
+        var header = HttpContext.Request.Headers["user-agent"].ToString();
+        var device = "windows";
 
-        var device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major}.{info.OS.Minor} - {info.UA.Family}";
+        if (header != null)
+        {
+            var info = uaParser.Parse(header);
+            device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major}.{info.OS.Minor} - {info.UA.Family}";
+
+        }
 
         var token = JWTTokenBuilder.BuildToken(user, _configuration);
         var refreshToken = Guid.NewGuid().ToString();

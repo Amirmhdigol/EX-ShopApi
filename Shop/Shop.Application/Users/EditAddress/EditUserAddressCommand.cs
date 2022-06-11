@@ -11,7 +11,7 @@ namespace Shop.Application.Users.EditAddress;
 public class EditUserAddressCommand : IBaseCommand
 {
     public EditUserAddressCommand(string province, string city, string name, string family
-        , string postalAddress, string postalCode, string nationalCode, PhoneNumber phoneNumber)
+        , string postalAddress, string postalCode, string nationalCode, PhoneNumber phoneNumber,long id)
     {
         Province = province;
         City = city;
@@ -21,9 +21,10 @@ public class EditUserAddressCommand : IBaseCommand
         PostalCode = postalCode;
         NationalCode = nationalCode;
         PhoneNumber = phoneNumber;
+        Id = id;
     }
     public long UserId { get; set; }
-    public long Id { get; set; }
+    public long Id { get; private set; }
     public string Province { get; private set; }
     public string City { get; private set; }
     public string Name { get; private set; }

@@ -16,11 +16,11 @@ namespace Shop.Domain.UserAgg
         {
 
         }
-        public UserAddress(string provice, string city, string name, string family, string postalAddress
+        public UserAddress(string province, string city, string name, string family, string postalAddress
             , string postalCode, string nationalCode, PhoneNumber phoneNumber)
         {
-            Guard(provice, city, name, family, postalAddress, postalCode, nationalCode, phoneNumber);
-            Provice = provice;
+            Guard(province, city, name, family, postalAddress, postalCode, nationalCode, phoneNumber);
+            Province = province;
             City = city;
             Name = name;
             Family = family;
@@ -32,7 +32,7 @@ namespace Shop.Domain.UserAgg
         }
 
         public long UserId { get; internal set; }
-        public string Provice { get; private set; }
+        public string Province { get; private set; }
         public string City { get; private set; }
         public string Name { get; private set; }
         public string Family { get; private set; }
@@ -42,11 +42,11 @@ namespace Shop.Domain.UserAgg
         public PhoneNumber PhoneNumber { get; private set; }
         public bool ActiveAddress { get; private set; }
 
-        public void Edit(string provice, string city, string name, string family, string postalAddress, string postalCode
+        public void Edit(string province, string city, string name, string family, string postalAddress, string postalCode
             , string nationalCode, PhoneNumber phoneNumber)
         {
-            Guard(provice, city, name, family, postalAddress, postalCode, nationalCode, phoneNumber);
-            Provice = provice;
+            Guard(province, city, name, family, postalAddress, postalCode, nationalCode, phoneNumber);
+            Province = province;
             City = city;
             Name = name;
             Family = family;
@@ -59,12 +59,12 @@ namespace Shop.Domain.UserAgg
         {
             ActiveAddress = true;
         }
-        public void Guard(string provice, string city, string Name, string family, string postalAddress, string postalCode
+        public void Guard(string province, string city, string Name, string family, string postalAddress, string postalCode
             , string nationalCode, PhoneNumber phoneNumber)
         {
             if (phoneNumber == null)
                 throw new NullOrEmptyDomainDataException("");
-            NullOrEmptyDomainDataException.CheckString(provice, nameof(provice));
+            NullOrEmptyDomainDataException.CheckString(province, nameof(province));
             NullOrEmptyDomainDataException.CheckString(city, nameof(city));
             NullOrEmptyDomainDataException.CheckString(Name, nameof(Name));
             NullOrEmptyDomainDataException.CheckString(family, nameof(family));

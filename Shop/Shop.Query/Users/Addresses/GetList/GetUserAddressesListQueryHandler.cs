@@ -17,7 +17,7 @@ public class GetUserAddressesListQueryHandler : IQueryHandler<GetUserAddressesLi
     {
         var sql = $"Select * from {_context.UserAddresses} where UserId=@userId";
         using var context = _context.CreateConnection();
-        var result = await context.QueryAsync<AddressDTO>(sql, new { id = request.userId });
+        var result = await context.QueryAsync<AddressDTO>(sql, new { userId = request.userId });
         return result.ToList();
     }
 }
