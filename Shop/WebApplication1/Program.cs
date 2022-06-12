@@ -84,6 +84,7 @@ app.Map("/test", (app) =>
  {
 
  });
+app.UseStaticFiles();
 app.UseCors("EXShopApi");
 app.UseAuthentication();
 app.UseAuthorization();

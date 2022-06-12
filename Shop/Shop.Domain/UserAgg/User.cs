@@ -91,6 +91,18 @@ namespace Shop.Domain.UserAgg
             OldAddress.Edit(address.Province, address.City, address.Name, address.Family, address.PostalAddress
                 , address.PostalCode, address.NationalCode, address.PhoneNumber);
         }
+        public void SetAddressActive(long addressId)
+        {
+            var address = Addresses.FirstOrDefault(A => A.Id == addressId);
+            if (address == null)
+                throw new NullOrEmptyDomainDataException("Address Not Found");
+
+            foreach (var userAddress in Addresses)
+            {
+                userAddress.SetDeActive(); 
+            }
+            address.SetActive();
+        }
         public void SetImages(string imageName)
         {
             if (string.IsNullOrWhiteSpace(imageName))

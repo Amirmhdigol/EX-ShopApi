@@ -3,6 +3,7 @@ using MediatR;
 using Shop.Application.Users.AddAddress;
 using Shop.Application.Users.DeleteAddress;
 using Shop.Application.Users.EditAddress;
+using Shop.Application.Users.SetAddressActive;
 using Shop.Query.Users.Addresses.DTOs;
 using Shop.Query.Users.Addresses.GetById;
 using Shop.Query.Users.Addresses.GetList;
@@ -21,6 +22,11 @@ internal class UserAddressFacade : IUserAddressFacade
     }
 
     public async Task<OperationResult> DeleteAddress(DeleteUserAddressCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+
+    public async Task<OperationResult> SetAddressActive(SetUserAddressActiveCommand command)
     {
         return await _mediator.Send(command);
     }
