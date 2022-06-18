@@ -10,17 +10,10 @@ namespace Shop.Application.SiteEntities.Sliders.Edit
 {
     public class EditSliderCommand : IBaseCommand
     {
-        public EditSliderCommand(long id, IFormFile? imageFile, string title, string link)
-        {
-            Id = id;
-            ImageFile = imageFile;
-            Title = title;
-            Link = link;
-        }
-        public long Id { get; private set; }
-        public IFormFile? ImageFile { get; private set; }
-        public string Title { get; private set; }
-        public string Link { get; private set; }
+        public long Id { get;  set; }
+        public IFormFile? ImageFile { get;  set; }
+        public string Title { get;  set; }
+        public string Link { get;  set; }
     }
 
 }

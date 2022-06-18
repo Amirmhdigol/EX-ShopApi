@@ -14,5 +14,10 @@ namespace Shop.Infrastructure.Persistent.Ef.SiteEntities.Repositories
         public SliderRepository(ShopContext context) : base(context)
         {
         }
+
+        public void Delete(Slider slider)
+        {
+            _context.Sliders.Remove(slider);
+        }
     }
 }

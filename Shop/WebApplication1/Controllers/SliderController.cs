@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.SiteEntities.Sliders.Create;
+using Shop.Application.SiteEntities.Sliders.Delete;
 using Shop.Application.SiteEntities.Sliders.Edit;
 using Shop.Presentation.Facade.SiteEntities.Sliders;
 using Shop.Query.SiteEntities.DTOs;
@@ -22,11 +23,17 @@ public class SliderController : ApiController
     {
         return CommandResult(await _facade.Create(command));
     }
-
+        
     [HttpPut]
     public async Task<ApiResult> EditSlider([FromForm] EditSliderCommand command)
     {
         return CommandResult(await _facade.Edit(command));
+    } 
+
+    [HttpDelete("{sliderId}")]
+    public async Task<ApiResult> DeleteSlider(long sliderId)
+    {
+        return CommandResult(await _facade.Delete(sliderId));
     }
 
     [HttpGet]

@@ -9,12 +9,13 @@ namespace Shop.Application.SiteEntities.Sliders.Edit
     internal class EditSliderCommandHandler : IBaseCommandHandler<EditSliderCommand>
     {
         private readonly IFileService _fileService;
-        private readonly ISliderRepository _repository;	
+        private readonly ISliderRepository _repository;
         public EditSliderCommandHandler(IFileService fileService, ISliderRepository repository)
         {
             _fileService = fileService;
             _repository = repository;
         }
+
         public async Task<OperationResult> Handle(EditSliderCommand request, CancellationToken cancellationToken)
         {
             var slider = await _repository.GetTracking(request.Id);
@@ -24,7 +25,7 @@ namespace Shop.Application.SiteEntities.Sliders.Edit
             var imageName = slider.ImageName;
             var oldName = slider.ImageName;
             if (request.ImageFile != null)
-                imageName = await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.SliderImages);
+                imageName = await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.BannerImages);
 
             slider.Edit(request.Title, request.Link, imageName);
             await _repository.Save();

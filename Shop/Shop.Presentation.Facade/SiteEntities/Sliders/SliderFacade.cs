@@ -1,6 +1,7 @@
 ﻿using Common.Application;
 using MediatR;
 using Shop.Application.SiteEntities.Sliders.Create;
+using Shop.Application.SiteEntities.Sliders.Delete;
 using Shop.Application.SiteEntities.Sliders.Edit;
 using Shop.Query.SiteEntities.DTOs;
 using Shop.Query.SiteEntities.Sliders.GetById;
@@ -19,6 +20,11 @@ internal class SliderFacade : ISliderFacade
     public async Task<OperationResult> Create(CreateSliderCommand command)
     {
         return await _mediator.Send(command);
+    }
+
+    public async Task<OperationResult> Delete(long sliderId)
+    {
+        return await _mediator.Send(new DeleteSliderCommand(sliderId));
     }
 
     public async Task<OperationResult> Edit(EditSliderCommand command)
