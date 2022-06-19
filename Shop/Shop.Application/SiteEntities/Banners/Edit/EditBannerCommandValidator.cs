@@ -8,7 +8,7 @@ namespace Shop.Application.SiteEntities.Banners.Edit
     {
         public EditBannerCommandValidator()
         {
-            RuleFor(a => a.ImageFile).NotNull().JustImageFile();
+            RuleFor(a => a.ImageFile).JustImageFile();
             RuleFor(a => a.Link).NotNull().NotEmpty().WithMessage(ValidationMessages.required("link"));
         }
     }

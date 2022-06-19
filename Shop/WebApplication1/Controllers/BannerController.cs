@@ -33,6 +33,12 @@ public class BannerController : ApiController
         return CommandResult(await _facade.Edit(command));
     }
 
+    [HttpDelete("{bannerId}")]
+    public async Task<ApiResult> DeleteBanner(long bannerId)
+    {
+        return CommandResult(await _facade.Delete(bannerId));
+    }
+
     [HttpGet("{bannerId}")]
     public async Task<ApiResult<BannerDTO>> GetBannerById(long bannerId)
     {
@@ -46,3 +52,4 @@ public class BannerController : ApiController
         return QueryResult(await _facade.GetBannersList());
     }
 }
+    
