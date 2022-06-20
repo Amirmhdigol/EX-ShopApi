@@ -17,7 +17,15 @@ namespace Shop.Application.Categories.Create
         {
             var category = new Category(request.Title, request.SeoData, request.Slug, _domainService);
             _repository.Add(category);
+            try
+            {
             await _repository.Save();
+
+            }
+             catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+            }
             return OperationResult<long>.Success(category.Id);
         }
     }

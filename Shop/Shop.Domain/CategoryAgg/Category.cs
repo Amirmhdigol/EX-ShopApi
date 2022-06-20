@@ -1,4 +1,4 @@
-﻿    using Common.Domain.Bases;
+﻿using Common.Domain.Bases;
 using Common.Domain.Exceptions;
 using Common.Domain.Utilities;
 using Common.Domain.ValueObjects;
@@ -32,7 +32,7 @@ namespace Shop.Domain.CategoryAgg
         public SeoData SeoData { get; private set; }
         public string Slug { get; private set; }
         public long? ParentId { get; private set; }
-        public List<Category> Childs { get; set; }
+        public List<Category>? Childs { get; set; }
 
         public void Edit(string title, SeoData seoData, string slug, ICategoryDomainService domainService)
         {

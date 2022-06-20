@@ -24,7 +24,7 @@ namespace Shop.Infrastructure.Persistent.Ef.CategoryAgg
             if (ContainsAnyProducts) return false;
 
             if (category.Childs.Any(a => a.Childs.Any()))
-                _context.RemoveRange(category.Childs.Select(a => a.Childs));
+                _context.RemoveRange(category.Childs.SelectMany(a => a.Childs));
 
             _context.RemoveRange(category.Childs);
             _context.RemoveRange(category);

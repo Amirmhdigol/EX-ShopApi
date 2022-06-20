@@ -12,13 +12,11 @@ namespace Common.Domain.ValueObjects
         private SeoData()
         {
         }
-
         public static SeoData CreateEmpty()
         {
             return new SeoData();
         }
-
-        public SeoData(string metaKeyWords, string metaDescription, string metaTitle, bool indexPage, string canonical,
+        public SeoData(string? metaKeyWords, string? metaDescription, string? metaTitle, bool indexPage, string? canonical,
             string schema)
         {
             MetaKeyWords = metaKeyWords;
@@ -28,13 +26,12 @@ namespace Common.Domain.ValueObjects
             Canonical = canonical;
             Schema = schema;
         }
-
-        public string MetaTitle { get; private set; }
-        public string MetaDescription { get; private set; }
-        public string MetaKeyWords { get; private set; }
+        public string? MetaTitle { get; private set; }
+        public string? MetaDescription { get; private set; }
+        public string? MetaKeyWords { get; private set; }
         public bool IndexPage { get; private set; }
-        public string Canonical { get; private set; }
-        public string Schema { get; private set; }
+        public string? Canonical { get; private set; }
+        public string? Schema { get; private set; }
     }
 }
 
