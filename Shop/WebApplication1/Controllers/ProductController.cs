@@ -2,6 +2,7 @@
 using Common.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.ViewModels.Products;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
@@ -37,12 +38,13 @@ public class ProductController : ApiController
     }
 
     [HttpGet("{productId}")]
-    public async Task<ApiResult<ProductDTO?>> GetProductsById(long productId)
+    public async Task<ApiResult<ProductDTO?>> GetProductById(long productId)
     {
-        return QueryResult(await _facade.GetProductById(productId));
+        var product = await _facade.GetProductById(productId);
+        return QueryResult(product);
     }
-
-    [HttpGet("{slug}")]
+    
+    [HttpGet("byslug/{slug}")]
     [AllowAnonymous]
     public async Task<ApiResult<ProductDTO?>> GetProductBySlug(string slug)
     {
@@ -50,9 +52,20 @@ public class ProductController : ApiController
     }
 
     [HttpPost]
-    public async Task<ApiResult> CreateProduct([FromForm] CreateProductCommand command)
+    public async Task<ApiResult> CreateProduct([FromForm] CreateProductViewModel command)
     {
-        return CommandResult(await _facade.Create(command));
+        return CommandResult(await _facade.Create(new CreateProductCommand
+        {
+            SeoData = command.SeoData.Map(),
+            CategoryId = command.CategoryId,
+            Description = command.Description,
+            ImageFile = command.ImageFile,
+            SecondrySubCategoryId = command.SecondarySubCategoryId,
+            Slug = command.Slug,
+            Specifications = command.GetSpecification(),
+            SubCategoryId = command.SubCategoryId,
+            Title = command.Title
+        }));
     }
 
     [HttpPost("images")]
@@ -68,8 +81,20 @@ public class ProductController : ApiController
     }
 
     [HttpPut]
-    public async Task<ApiResult> EditProduct([FromForm] EditProductCommand command)
+    public async Task<ApiResult> EditProduct([FromForm] EditProductViewModel command)
     {
-        return CommandResult(await _facade.Edit(command));
+        return CommandResult(await _facade.Edit(new EditProductCommand
+        {
+            CategoryId = command.CategoryId,
+            Description = command.Description,
+            SecondrySubCategoryId = command.SecondarySubCategoryId,
+            SubCategoryId = command.SubCategoryId,
+            ImageFile = command.ImageFile,
+            ProductId = command.ProductId,
+            SeoData = command.SeoData.Map(),
+            Slug = command.Slug,
+            Title = command.Title,
+            Specifications = command.GetSpecification(),
+        }));
     }
 }
