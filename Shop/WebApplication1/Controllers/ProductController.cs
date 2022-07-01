@@ -2,6 +2,7 @@
 using Common.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.ViewModels.Products;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
@@ -50,9 +51,20 @@ public class ProductController : ApiController
     }
 
     [HttpPost]
-    public async Task<ApiResult> CreateProduct([FromForm] CreateProductCommand command)
+    public async Task<ApiResult> CreateProduct([FromForm] CreateProductViewModel command)
     {
-        return CommandResult(await _facade.Create(command));
+        return CommandResult(await _facade.Create(new CreateProductCommand
+        {
+            SeoData = command.SeoData.Map(),
+            CategoryId = command.CategoryId,
+            Description = command.Description,
+            ImageFile = command.ImageFile,
+            SecondrySubCategoryId = command.SecondarySubCategoryId,
+            Slug = command.Slug,
+            Specifications = command.GetSpecification(),
+            SubCategoryId = command.SubCategoryId,
+            Title = command.Title
+        }));
     }
 
     [HttpPost("images")]
