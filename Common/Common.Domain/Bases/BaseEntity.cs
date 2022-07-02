@@ -13,9 +13,7 @@ namespace Common.Domain.Bases
 
         public BaseEntity()
         {
-            CreationDate = new DateTime();
+            CreationDate = DateTime.Now;
         }
     }
-
 }
-

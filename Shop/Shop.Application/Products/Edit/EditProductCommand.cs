@@ -32,10 +32,11 @@ namespace Shop.Application.Products.Edit
         private readonly IProductDomainService _domainService;
         private readonly IProductRepository _repository;
         private readonly IFileService _fileService;
-        public EditProductCommandHandler(IProductDomainService domainService, IProductRepository repository)
+        public EditProductCommandHandler(IProductDomainService domainService, IProductRepository repository, IFileService fileService)
         {
             _domainService = domainService;
             _repository = repository;
+            _fileService = fileService;
         }
         public async Task<OperationResult> Handle(EditProductCommand request, CancellationToken cancellationToken)
         {
