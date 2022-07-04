@@ -7,10 +7,12 @@ using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Application.Users.Register;
 using Shop.Application.Users.RemoveToken;
+using Shop.Query.Roles.DTOs;
 using Shop.Query.Users.DTOs;
 using Shop.Query.Users.GetByFilter;
 using Shop.Query.Users.GetById;
 using Shop.Query.Users.GetByPhoneNumber;
+using Shop.Query.Users.GetUserRoles;
 using Shop.Query.Users.UserTokens;
 using Shop.Query.Users.UserTokens.GetTokenByJwtToken;
 using Shop.Query.Users.UserTokens.GetUserTokenByRefreshToken;
@@ -71,6 +73,11 @@ internal class UserFacade : IUserFacade
     public async Task<UserDTO?> GetUserByPhoneNumber(string phoneNumber)
     {
         return await _mediator.Send(new GetUserByPhoneNumberQuery(phoneNumber));
+    }
+
+    public async Task<List<RoleDTO>> GetUsersRoleById(long userId)
+    {
+        return await _mediator.Send(new GetUserRolesByIdQuery(userId));
     }
 
     public async Task<OperationResult> RegisterUser(RegisterUserCommand command)

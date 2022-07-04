@@ -5,6 +5,7 @@ using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Application.Users.Register;
 using Shop.Application.Users.RemoveToken;
+using Shop.Query.Roles.DTOs;
 using Shop.Query.Users.DTOs;
 
 namespace Shop.Presentation.Facade.Users;
@@ -19,6 +20,7 @@ public interface IUserFacade
 
     Task<UserDTO?> GetUserByPhoneNumber(string phoneNumber);
     Task<UserDTO?> GetUserById(long userId);
+    Task<List<RoleDTO>> GetUsersRoleById(long userId);
     Task<UserFilterResult> GetUserByFilter(UserFilterParams filterParams);
     Task<UserTokenDTO?> GetTokenByRefreshToken(string refreshToken);
     Task<UserTokenDTO?> GetTokenByJwtToken(string jwtToken);

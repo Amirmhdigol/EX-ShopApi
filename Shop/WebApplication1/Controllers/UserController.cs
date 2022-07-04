@@ -8,6 +8,7 @@ using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Application.Users.Register;
 using Shop.Presentation.Facade.Users;
+using Shop.Query.Roles.DTOs;
 using Shop.Query.Users.DTOs;
 
 namespace Shop.Api.Controllers;
@@ -83,6 +84,13 @@ public class UserController : ApiController
     public async Task<ApiResult<UserDTO>> GetCurrentUser()
     {
         var result = await _facade.GetUserById(User.GetUserId());
+        return QueryResult(result);
+    }
+
+    [HttpGet("GetRole")]
+    public async Task<ApiResult<List<RoleDTO>>> GetUserRoles(long userId)
+    {
+        var result = await _facade.GetUsersRoleById(userId);
         return QueryResult(result);
     }
 }

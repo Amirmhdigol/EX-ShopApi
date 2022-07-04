@@ -31,8 +31,8 @@ public class UserFilterData : BaseDTO
 }
 public class UserFilterParams : BaseFilterParam
 {
-    public string? Email { get; private set; }
-    public string? PhoneNumber { get; private set; }
+    public string? Email { get; set; }
+    public string? PhoneNumber { get; set; }
     public long? Id { get; set; }
 }
 public class UserFilterResult : BaseFilter<UserFilterData, UserFilterParams>
