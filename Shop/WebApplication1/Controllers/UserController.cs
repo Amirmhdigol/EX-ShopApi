@@ -6,10 +6,15 @@ using Shop.Api.ViewModels.Users;
 using Shop.Application.Users.ChangePassword;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
+using Shop.Application.Users.EditCurrent;
 using Shop.Application.Users.Register;
+using Shop.Application.Users.RemoveUser;
+using Shop.Application.Users.SetUserRole;
+using Shop.Domain.UserAgg;
 using Shop.Presentation.Facade.Users;
 using Shop.Query.Roles.DTOs;
 using Shop.Query.Users.DTOs;
+using Shop.Query.Users.GetUserRoleId;
 
 namespace Shop.Api.Controllers;
 
@@ -27,7 +32,7 @@ public class UserController : ApiController
 
     [HttpPost]
     [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
-    public async Task<ApiResult> CreateUser([FromForm] CreateUserCommand command)
+    public async Task<ApiResult> CreateUser(CreateUserCommand command)
     {
         return CommandResult(await _facade.CreateUser(command));
     }
@@ -35,19 +40,33 @@ public class UserController : ApiController
     [HttpPut("Current")]
     public async Task<ApiResult> EditUser([FromForm] EditUserViewModel command)
     {
-        var commandModel = new EditUserCommand(User.GetUserId(), command.Avatar, command.Name, command.Family
-            , command.Email, command.Gender, command.PhoneNumber);
-
-        var result = await _facade.EditUser(commandModel);
+        var commandModel = new EditCurrentUserCommand
+        {
+            UserId = User.GetUserId(),
+            Avatar = command.Avatar,
+            Email = command.Email,
+            Family = command.Family,
+            Gender = command.Gender,
+            Name = command.Name,
+            PhoneNumber = command.PhoneNumber,
+        };
+        var result = await _facade.EditCurrentUser(commandModel);
         return CommandResult(result);
     }
 
     [HttpPut]
     [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
-    public async Task<ApiResult> EditUser(EditUserCommand command)
+    public async Task<ApiResult> EditUser([FromForm] EditUserCommand command)
     {
-        command.UserId = User.GetUserId();
+        //command.UserId = User.GetUserId();
         return CommandResult(await _facade.EditUser(command));
+    }
+
+    [HttpDelete("{userId}")]
+    [AllowAnonymous]
+    public async Task<ApiResult> SoftDeleteUser(long userId)
+    {
+        return CommandResult(await _facade.SoftDeleteUser(userId));
     }
 
     [HttpPut("ChangePassword")]
@@ -60,6 +79,14 @@ public class UserController : ApiController
     }
 
     [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
+    [HttpPost("SetRole")]
+    public async Task<ApiResult> SetRole(SetUserRoleCommand command)
+    {
+        var result = await _facade.SetUserRole(command);
+        return CommandResult(result);
+    }
+
+    [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
     [HttpGet("{userId}")]
     public async Task<ApiResult<UserDTO?>> GetUserById(long userId)
     {
@@ -67,7 +94,7 @@ public class UserController : ApiController
     }
 
     [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
-    [HttpGet("{phoneNumber}")]
+    [HttpGet("PhoneNumber/{phoneNumber}")]
     public async Task<ApiResult<UserDTO?>> GetUserByPhoneNumber(string phoneNumber)
     {
         return QueryResult(await _facade.GetUserByPhoneNumber(phoneNumber));
@@ -87,10 +114,19 @@ public class UserController : ApiController
         return QueryResult(result);
     }
 
-    [HttpGet("GetRole")]
-    public async Task<ApiResult<List<RoleDTO>>> GetUserRoles(long userId)
+    [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
+    [HttpGet("UserRole/{userIdRole}")]
+    public async Task<ApiResult<List<RoleDTO>>> GetUserRoles(long userIdRole)
     {
-        var result = await _facade.GetUsersRoleById(userId);
+        var result = await _facade.GetUsersRoleById(userIdRole);
+        return QueryResult(result);
+    }
+
+    [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
+    [HttpGet("UserRole/Id/{userRoleId}")]
+    public async Task<ApiResult<LlongRoleId>> GetUserRoleId(long userId)
+    {
+        var result = await _facade.GetUserRoleId(userId);
         return QueryResult(result);
     }
 }

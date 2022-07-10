@@ -27,13 +27,13 @@ namespace Shop.Application.Users.Edit
                 return OperationResult.NotFound();
 
             var oldAvatar = user.UserAvatar;
-            user.Edit(request.Name, request.Family, request.Email, request.Gender, request.PhoneNumber, _domainService);
+            user.Edit(request.Name, request.Family, request.Email, request.Gender, request.PhoneNumber, request.RoleId, _domainService);
             if (request.Avatar != null)
             {
                 var imageName = await _fileService.SaveFileAndGenerateName(request.Avatar, Directories.UserAvatars);
                 user.SetImages(imageName);
             }
-            DeleteOldAvatar(request.Avatar,oldAvatar);
+            DeleteOldAvatar(request.Avatar, oldAvatar);
             await _repository.Save();
             return OperationResult.Success();
         }

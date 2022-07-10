@@ -2,6 +2,7 @@
 using Common.Domain.Bases;
 using Common.Domain.Exceptions;
 using Shop.Domain.UserAgg.Enums;
+using Shop.Domain.UserAgg.Events;
 using Shop.Domain.UserAgg.Services;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Shop.Domain.UserAgg
         {
 
         }
-        public User(string name, string family, string password, string email, Gender gender, string phoneNumber
+        public User(string name, string family, string password, string email, Gender gender, string phoneNumber, long roleId
             , IUserDomainService domainServices)
         {
             Guard(phoneNumber, email, domainServices);
@@ -29,10 +30,12 @@ namespace Shop.Domain.UserAgg
             Gender = gender;
             PhoneNumber = phoneNumber;
             IsActive = true;
-            UserRoles = new();
+            IsDelete = false;
+            RoleId = roleId;
             Addresses = new();
             Wallets = new();
             UserTokens = new();
+            AddDomainEvent(new UserCreated(Id));
         }
 
         public string Name { get; private set; }
@@ -40,16 +43,28 @@ namespace Shop.Domain.UserAgg
         public string Password { get; private set; }
         public string Email { get; private set; }
         public bool IsActive { get; set; }
+        public bool IsDelete { get; set; }
         public string UserAvatar { get; private set; }
         public Gender Gender { get; private set; }
         public string PhoneNumber { get; private set; }
+        public long RoleId { get; private set; }
 
         public List<UserAddress> Addresses { get; }
         public List<Wallet> Wallets { get; }
-        public List<UserRole> UserRoles { get; }
         public List<UserToken> UserTokens { get; }
 
         public void Edit(string name, string family, string email, Gender gender, string phoneNumber
+            , long roleId, IUserDomainService domainServices)
+        {
+            Guard(phoneNumber, email, domainServices);
+            Name = name;
+            Family = family;
+            Email = email;
+            Gender = gender;
+            PhoneNumber = phoneNumber;
+            RoleId = roleId;
+        }
+        public void EditCurrent(string name, string family, string email, Gender gender, string phoneNumber
             , IUserDomainService domainServices)
         {
             Guard(phoneNumber, email, domainServices);
@@ -67,12 +82,16 @@ namespace Shop.Domain.UserAgg
         }
         public static User RegisterUser(string phoneNumber, string password, IUserDomainService domainServices)
         {
-            return new User("", "", password, null, Gender.None, phoneNumber, domainServices);
+            return new User("", "", password, null, Gender.None, phoneNumber, 3, domainServices);
         }
         public void AddAddress(UserAddress address)
         {
             address.UserId = Id;
             Addresses.Add(address);
+        }
+        public void SoftDelete(long userId)
+        {
+            if (userId == Id) IsDelete = true;
         }
         public void DeleteAddress(long addressId)
         {
@@ -99,7 +118,7 @@ namespace Shop.Domain.UserAgg
 
             foreach (var userAddress in Addresses)
             {
-                userAddress.SetDeActive(); 
+                userAddress.SetDeActive();
             }
             address.SetActive();
         }
@@ -113,12 +132,6 @@ namespace Shop.Domain.UserAgg
         {
             wallet.UserId = Id;
             Wallets.Add(wallet);
-        }
-        public void SetRoles(List<UserRole> userRoles)
-        {
-            userRoles.ForEach(f => f.UserId = Id);
-            UserRoles.Clear();
-            UserRoles.AddRange(userRoles);
         }
         public void AddToken(string hashedJwtToken, string hashedRefreshToken, DateTime tokenExpireDate
             , DateTime refreshTokenExpireDate, string device)

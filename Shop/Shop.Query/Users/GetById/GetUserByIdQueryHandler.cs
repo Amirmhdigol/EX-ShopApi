@@ -16,6 +16,6 @@ public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserDTO>
     {
         var user = await _context.Users.FirstOrDefaultAsync(a => a.Id == request.UserId, cancellationToken);
         if (user == null) return null;
-        return await user.Map().SetUserRoleTitles(_context);
+        return user.Map();
     }
 }

@@ -94,12 +94,6 @@ namespace Shop.Infrastructure.Persistent.Ef.UserAgg
                     .IsRequired(false)
                     .HasMaxLength(500);
             });
-
-            builder.OwnsMany(b => b.UserRoles, option =>
-            {
-                option.ToTable("Roles", "user");
-                option.HasIndex(b => b.UserId);
-            });
         }
     }
 }

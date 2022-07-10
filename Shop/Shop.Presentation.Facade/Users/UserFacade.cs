@@ -5,13 +5,17 @@ using Shop.Application.Users.AddTokens;
 using Shop.Application.Users.ChangePassword;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
+using Shop.Application.Users.EditCurrent;
 using Shop.Application.Users.Register;
 using Shop.Application.Users.RemoveToken;
+using Shop.Application.Users.RemoveUser;
+using Shop.Application.Users.SetUserRole;
 using Shop.Query.Roles.DTOs;
 using Shop.Query.Users.DTOs;
 using Shop.Query.Users.GetByFilter;
 using Shop.Query.Users.GetById;
 using Shop.Query.Users.GetByPhoneNumber;
+using Shop.Query.Users.GetUserRoleId;
 using Shop.Query.Users.GetUserRoles;
 using Shop.Query.Users.UserTokens;
 using Shop.Query.Users.UserTokens.GetTokenByJwtToken;
@@ -39,6 +43,11 @@ internal class UserFacade : IUserFacade
     }
 
     public async Task<OperationResult> CreateUser(CreateUserCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+
+    public async Task<OperationResult> EditCurrentUser(EditCurrentUserCommand command)
     {
         return await _mediator.Send(command);
     }
@@ -75,6 +84,11 @@ internal class UserFacade : IUserFacade
         return await _mediator.Send(new GetUserByPhoneNumberQuery(phoneNumber));
     }
 
+    public async Task<LlongRoleId> GetUserRoleId(long userId)
+    {
+        return await _mediator.Send(new GetUserRoleIdQuery(userId));
+    }
+
     public async Task<List<RoleDTO>> GetUsersRoleById(long userId)
     {
         return await _mediator.Send(new GetUserRolesByIdQuery(userId));
@@ -88,5 +102,15 @@ internal class UserFacade : IUserFacade
     public async Task<OperationResult> RemoveToken(RemoveUserTokenCommand command)
     {
         return await _mediator.Send(command);
+    }
+
+    public async Task<OperationResult> SetUserRole(SetUserRoleCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+
+    public async Task<OperationResult> SoftDeleteUser(long userId)
+    {
+        return await _mediator.Send(new DeleteUserByIdCommand(userId));
     }
 }

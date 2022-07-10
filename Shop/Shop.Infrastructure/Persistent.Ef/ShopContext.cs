@@ -38,6 +38,9 @@ public class ShopContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        //Filters Users by IsDelete 
+        modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDelete);
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }

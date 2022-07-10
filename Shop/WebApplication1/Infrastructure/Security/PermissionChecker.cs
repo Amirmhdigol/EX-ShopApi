@@ -61,9 +61,9 @@ public class PermissionChecker : AuthorizeAttribute, IAsyncAuthorizationFilter
         if (user == null)
             return false;
 
-        var roleIds = user.UserRoles.Select(s => s.RoleId).ToList();
+        var roleId = user.RoleId;
         var roles = await _roleFacade.GetRoles();
-        var userRoles = roles.Where(r => roleIds.Contains(r.Id));
+        var userRoles = roles.Where(r => roleId == r.Id);
 
         return userRoles.Any(r => r.Permissions.Contains(_permission));
     }

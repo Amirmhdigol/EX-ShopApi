@@ -1,5 +1,6 @@
 ﻿using Common.Application.Validation.CustomValidation.IFormFile;
 using Shop.Domain.UserAgg.Enums;
+using Shop.Query.Users.DTOs;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Api.ViewModels.Users;
@@ -26,4 +27,7 @@ public class EditUserViewModel
     public string Email { get; set; }
 
     public Gender Gender { get; set; } = Gender.None;
+
+    [Display(Name = "نقش")]
+    public UserRoleDTO UserRole { get; set; }
 }

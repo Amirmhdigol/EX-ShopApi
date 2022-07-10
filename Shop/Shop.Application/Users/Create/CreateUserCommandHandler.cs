@@ -1,5 +1,6 @@
 ﻿using Common.Application;
 using Common.Application.SecurityUtil;
+using Shop.Domain.RoleAgg.Repository;
 using Shop.Domain.UserAgg;
 using Shop.Domain.UserAgg.Repository;
 using Shop.Domain.UserAgg.Services;
@@ -19,7 +20,7 @@ namespace Shop.Application.Users.Create
         {
             var hPassword = Sha256Hasher.Hash(request.Password);
             var user = new User(request.Name, request.Family, hPassword, request.Email
-                , request.Gender, request.PhoneNumber, _domainService);
+                , request.Gender, request.PhoneNumber, request.RoleId, _domainService);
 
             _repository.Add(user);
             await _repository.Save();

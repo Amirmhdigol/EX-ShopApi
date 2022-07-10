@@ -1,19 +1,22 @@
 ﻿using Common.Domain.Bases;
 
-namespace Shop.Domain.UserAgg
+namespace Shop.Domain.UserAgg;
+public class UserRole : BaseEntity
 {
-    public class UserRole : BaseEntity
+    public UserRole()
     {
-        private UserRole()
-        {
 
-        }
-        public UserRole(long roleId)
-        {
-            RoleId = roleId;
-        }
+    }
+    public UserRole(long userId, long roleId)
+    {
+        UserId = userId;
+        RoleId = roleId;
+    }
+    public long UserId { get; set; }
+    public long RoleId { get; set; }
 
-        public long UserId { get; internal set; }
-        public long RoleId { get; private set; }
+    public void SetUserRole(UserRole userRole)
+    {
+        new UserRole(userRole.UserId, userRole.RoleId);
     }
 }

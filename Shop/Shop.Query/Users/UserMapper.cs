@@ -20,29 +20,21 @@ public static class UserMapper
             PhoneNumber = user.PhoneNumber,
             UserAvatar = user.UserAvatar,
             IsActive = user.IsActive,
-            UserRoles = user.UserRoles.Select(a => new UserRoleDTO()
-            {
-                RoleId = a.RoleId,
-                RoleTitle = ""
-            }).ToList()
+            RoleId = user.RoleId,
         };
     }
-    public static async Task<UserDTO> SetUserRoleTitles(this UserDTO userDTO, ShopContext _context)
-    {
-        var roleIds = userDTO.UserRoles.Select(a => a.RoleId);
-        var result = await _context.Roles.Where(a => roleIds.Contains(a.Id)).ToListAsync();
-        var roles = new List<UserRoleDTO>();
-        foreach (var role in result)
-        {
-            roles.Add(new UserRoleDTO()
-            {
-                RoleId = role.Id,
-                RoleTitle = role.Title,
-            });
-        };
-        userDTO.UserRoles = roles;
-        return userDTO;
-    }
+    //public static async Task<UserDTO> SetUserRoleTitles(this UserDTO userDTO, ShopContext _context)
+    //{
+    //    var roleIds = userDTO.UserRoles.RoleId;
+    //    var result = await _context.Roles.FirstOrDefaultAsync(a => roleIds == a.Id);
+    //    var role = new UserRoleDTO()
+    //    {
+    //        RoleId = result.Id,
+    //        RoleTitle = result.Title
+    //    };
+    //    userDTO.UserRoles = role;
+    //    return userDTO;
+    //}
     public static UserFilterData MapFilterData(this User user)
     {
         return new UserFilterData()
@@ -55,6 +47,7 @@ public static class UserMapper
             Name = user.Name,
             PhoneNumber = user.PhoneNumber,
             UserAvatar = user.UserAvatar,
+            RoleId = user.RoleId
         };
     }
 }

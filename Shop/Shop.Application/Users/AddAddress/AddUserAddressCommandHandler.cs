@@ -19,8 +19,8 @@ namespace Shop.Application.Users.AddAddress
             if (user == null)
                 return OperationResult.NotFound();
 
-            var address = new UserAddress(request.Province,request.City,request.Name,request.Family
-                ,request.PostalAddress,request.PostalCode,request.NationalCode,request.PhoneNumber);
+            var address = new UserAddress(request.Province, request.City, request.Name, request.Family
+                , request.PostalAddress, request.PostalCode, request.NationalCode, request.PhoneNumber);
 
             user.AddAddress(address);
             await _repository.Save();

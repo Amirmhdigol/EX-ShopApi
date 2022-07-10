@@ -7,6 +7,7 @@ namespace Shop.Application.Users.Edit
     {
         public EditUserCommandValidator()
         {
+
             RuleFor(a => a.PhoneNumber).ValidPhoneNumber();
             RuleFor(a => a.Email).EmailAddress().WithMessage("Email Is not valid");
             RuleFor(i => i.Avatar).JustImageFile();

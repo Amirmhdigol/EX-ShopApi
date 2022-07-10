@@ -301,6 +301,9 @@ namespace Shop.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
@@ -314,6 +317,9 @@ namespace Shop.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("UserAvatar")
                         .IsRequired()
@@ -800,33 +806,6 @@ namespace Shop.Infrastructure.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsMany("Shop.Domain.UserAgg.UserRole", "UserRoles", b1 =>
-                        {
-                            b1.Property<long>("UserId")
-                                .HasColumnType("bigint");
-
-                            b1.Property<long>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
-
-                            b1.Property<DateTime>("CreationDate")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<long>("RoleId")
-                                .HasColumnType("bigint");
-
-                            b1.HasKey("UserId", "Id");
-
-                            b1.HasIndex("UserId");
-
-                            b1.ToTable("Roles", "user");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
                     b.OwnsMany("Shop.Domain.UserAgg.UserToken", "UserTokens", b1 =>
                         {
                             b1.Property<long>("Id")
@@ -913,8 +892,6 @@ namespace Shop.Infrastructure.Migrations
                         });
 
                     b.Navigation("Addresses");
-
-                    b.Navigation("UserRoles");
 
                     b.Navigation("UserTokens");
 

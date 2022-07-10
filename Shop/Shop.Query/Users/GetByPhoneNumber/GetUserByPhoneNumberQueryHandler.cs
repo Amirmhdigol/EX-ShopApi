@@ -16,6 +16,6 @@ internal class GetUserByPhoneNumberQueryHandler : IQueryHandler<GetUserByPhoneNu
     {
         var user = await _context.Users.FirstOrDefaultAsync(a => a.PhoneNumber == request.PhoneNumber, cancellationToken);
         if (user == null) return null;
-        return await user.Map().SetUserRoleTitles(_context);
+        return user.Map();
     }
 }
