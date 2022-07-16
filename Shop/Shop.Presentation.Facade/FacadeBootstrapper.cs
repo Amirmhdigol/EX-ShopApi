@@ -5,6 +5,7 @@ using Shop.Presentation.Facade.Orders;
 using Shop.Presentation.Facade.Products;
 using Shop.Presentation.Facade.Roles;
 using Shop.Presentation.Facade.Sellers;
+using Shop.Presentation.Facade.Sellers.Inventories;
 using Shop.Presentation.Facade.SiteEntities.Banners;
 using Shop.Presentation.Facade.SiteEntities.Sliders;
 using Shop.Presentation.Facade.Users;
@@ -22,6 +23,7 @@ public static class FacadeBootstrapper
         services.AddScoped<ISellerFacade, SellerFacade>();
         services.AddScoped<IBannerFacade, BannerFacade>();
         services.AddScoped<ISliderFacade, SliderFacade>();
+        services.AddScoped<ISellerInventoryFacade, SellersInventoryFacade>();
         services.AddScoped<IUserFacade, UserFacade>();
         services.AddScoped<IUserAddressFacade, UserAddressFacade>();
     }

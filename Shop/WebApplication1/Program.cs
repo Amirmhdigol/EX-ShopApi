@@ -30,7 +30,10 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(option =>
         return new BadRequestObjectResult(result);
     });
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddDistributedRedisCache(option =>
+{
+    option.Configuration = "localhost:6379";
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {

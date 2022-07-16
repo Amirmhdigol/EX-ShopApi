@@ -12,7 +12,8 @@ public class JWTTokenBuilder
         var claims = new List<Claim>()
         {
             new Claim(ClaimTypes.MobilePhone,user.PhoneNumber),
-            new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+            new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+            new Claim(ClaimTypes.Role,user.RoleId.ToString())
         };
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfig:SignInKey"]));
         var credential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -25,5 +26,5 @@ public class JWTTokenBuilder
             signingCredentials: credential);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
-    }
+    } 
 }

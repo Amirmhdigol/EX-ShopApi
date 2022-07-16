@@ -91,7 +91,6 @@ public class AuthController : ApiController
         {
             var info = uaParser.Parse(header);
             device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major}.{info.OS.Minor} - {info.UA.Family}";
-
         }
 
         var token = JWTTokenBuilder.BuildToken(user, _configuration);
