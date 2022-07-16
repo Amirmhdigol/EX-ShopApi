@@ -22,6 +22,7 @@ public class CategoryController : ApiController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ApiResult<List<CategoryDto>>> GetCategoriesList()
     {
         var result = await _facade.GetCategoryList();
