@@ -19,12 +19,11 @@ internal class EditUserAddressCommandHandler : IBaseCommandHandler<EditUserAddre
         if (user == null)
             return OperationResult.NotFound();
 
-        var address = new UserAddress(request.Province,request.City,request.Name,request.Family
-            ,request.PostalAddress,request.PostalCode,request.NationalCode,request.PhoneNumber);
+        var address = new UserAddress(request.Province, request.City, request.Name, request.Family
+            , request.PostalAddress, request.PostalCode, request.NationalCode, request.PhoneNumber);
 
-        user.EditAddress(address,request.Id);
+        user.EditAddress(address, request.Id);
         await _repository.Save();
         return OperationResult.Success();
     }
 }
-

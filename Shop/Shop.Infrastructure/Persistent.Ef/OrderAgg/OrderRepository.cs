@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿    using Microsoft.EntityFrameworkCore;
 using Shop.Domain.OrderAgg;
 using Shop.Infrastructure._Utilities;
 using Shop.Infrastructure.Persistent.Ef;

@@ -36,7 +36,7 @@ public class EditBannerCommandHandler : IBaseCommandHandler<EditBannerCommand>
     private void DeleteOldImage(IFormFile? imageFile, string oldImageName)
     {
         if (imageFile != null)
-            _fileService.DeleteFile(Directories.SliderImages, oldImageName);
+            _fileService.DeleteFile(Directories.BannerImages, oldImageName);
 
     }
 }

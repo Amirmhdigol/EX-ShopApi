@@ -28,7 +28,7 @@ namespace Shop.Domain.UserAgg
             Email = email;
             UserAvatar = "avatar.png";
             Gender = gender;
-            PhoneNumber = phoneNumber;
+            PhoneNumber = phoneNumber;  
             IsActive = true;
             IsDelete = false;
             RoleId = roleId;
