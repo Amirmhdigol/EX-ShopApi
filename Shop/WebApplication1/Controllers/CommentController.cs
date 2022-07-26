@@ -27,6 +27,19 @@ public class CommentController : ApiController
         return QueryResult(result);
     }
 
+    [HttpGet("productComments")]
+    public async Task<ApiResult<CommentFilterResult>> GetProductComments(int pageId = 1, int take = 10, int productId = 0)
+    {
+        var result = await _facade.GetCommentsByFilter(new CommentFilterParams
+        {
+            ProductId = productId,
+            Take = take,
+            PageId = pageId,
+            CommentStatus = Domain.CommentAgg.CommentStatus.Accepted
+        });
+        return QueryResult(result);
+    }
+
     [PermissionChecker(Permission.Comment_Management)]
     [HttpGet("{commentId}")]
     public async Task<ApiResult<CommentDto?>> GetCommentsById(long commentId)
@@ -34,7 +47,7 @@ public class CommentController : ApiController
         var result = await _facade.GetCommentById(commentId);
         return QueryResult(result);
     }
-    
+
     [Authorize]
     [HttpPost]
     public async Task<ApiResult> CreateComment(CreateCommentCommand command)
