@@ -64,6 +64,14 @@ public class CommentController : ApiController
         return CommandResult(result);
     }
 
+    //[PermissionChecker(Permission.Comment_Management)]
+    [HttpDelete("{commentId}")]
+    public async Task<ApiResult> DeleteComment(long commentId)
+    {
+        var result = await _facade.DeleteComment(commentId);
+        return CommandResult(result);
+    }
+
     [PermissionChecker(Permission.Comment_Management)]
     [HttpDelete("{commentId}")]
     public async Task<ApiResult> DeleteComment(long commentId)
