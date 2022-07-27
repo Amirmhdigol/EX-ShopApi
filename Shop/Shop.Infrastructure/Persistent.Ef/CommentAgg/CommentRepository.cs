@@ -6,12 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Infrastructure.Persistent.Ef.CommentAgg
+namespace Shop.Infrastructure.Persistent.Ef.CommentAgg;
+public class CommentRepository : BaseRepository<Comment>, ICommentRepository
 {
-    public class CommentRepository : BaseRepository<Comment>, ICommentRepository
+    public CommentRepository(ShopContext context) : base(context)
     {
-        public CommentRepository(ShopContext context) : base(context)
-        {
-        }
+    }
+
+    public void Delete(Comment comment)
+    {
+        _context.Comments.Remove(comment);
     }
 }
