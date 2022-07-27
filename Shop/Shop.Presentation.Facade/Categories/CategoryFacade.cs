@@ -1,5 +1,7 @@
 ﻿using Common.Application;
+using Common.CacheHelper;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Shop.Application.Categories.AddChild;
 using Shop.Application.Categories.Create;
 using Shop.Application.Categories.Edit;
@@ -14,9 +16,11 @@ namespace Shop.Presentation.Facade.Categories;
 internal class CategoryFacade : ICategoryFacade
 {
     private readonly IMediator _mediator;
-    public CategoryFacade(IMediator mediator)
+    private readonly IDistributedCache _cache; 
+    public CategoryFacade(IMediator mediator, IDistributedCache cache)
     {
         _mediator = mediator;
+        _cache = cache;
     }
     public async Task<OperationResult<long>> AddChild(AddCategoryChildCommand command)
     {
@@ -30,7 +34,10 @@ internal class CategoryFacade : ICategoryFacade
 
     public async Task<OperationResult> Edit(EditCategoryCommand command)
     {
-        return await _mediator.Send(command);
+        var res = await _mediator.Send(command);
+        if (res.Status == OperationResultStatus.Success)
+            await _cache.RemoveAsync(CacheKeys.Categories);
+        return res;
     }
 
     public async Task<List<CategoryChildDto>> GetCategoriesByParentId(long parentId)
@@ -45,11 +52,17 @@ internal class CategoryFacade : ICategoryFacade
 
     public async Task<List<CategoryDto>> GetCategoryList()
     {
-        return await _mediator.Send(new GetCategoryListQuery());
+        return await _cache.GetOrSet(CacheKeys.Categories, () =>
+        {
+            return  _mediator.Send(new GetCategoryListQuery());
+        });
     }
 
     public async Task<OperationResult> Remove(long id)
     {
-        return await _mediator.Send(new RemoveCategoryCommand(id));
+        var res = await _mediator.Send(new RemoveCategoryCommand(id));
+        if (res.Status == OperationResultStatus.Success)
+            await _cache.RemoveAsync(CacheKeys.Categories);
+        return res;
     }
 }
