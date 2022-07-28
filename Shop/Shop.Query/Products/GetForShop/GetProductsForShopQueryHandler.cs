@@ -32,7 +32,7 @@ internal class GetProductsForShopQueryHandler : IQueryHandler<GetProductsForShop
             {
                 conditions += @$" and (A.CategoryId={category.Id} or A.SubCategoryId={category.Id}
                               or A.SecondarySubCategoryId={category.Id})";
-                selectedCategory = category.Map();  
+                selectedCategory = category.Map();
             }
         }
 
@@ -103,7 +103,7 @@ internal class GetProductsForShopQueryHandler : IQueryHandler<GetProductsForShop
             Data = result.ToList(),
             CategoryDto = selectedCategory
         };
-        model.GeneratePaging(@params.Take, @params.PageId, count);
+        model.GeneratePaging(count, @params.Take, @params.PageId);
         return model;
     }
 }

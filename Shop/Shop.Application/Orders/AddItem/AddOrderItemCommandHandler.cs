@@ -20,9 +20,15 @@ namespace Shop.Application.Orders.AddItem
             var UserOrder = await _repository.GetCurrentUserOrder(request.UserId);
 
             if (UserOrder == null)
+            {
                 UserOrder = new Order(request.UserId);
-
-            UserOrder.AddItem(new OrderItem(request.InventoryId, request.Count, Inventory.Price));
+                UserOrder.AddItem(new OrderItem(request.InventoryId, request.Count, Inventory.Price));
+                _repository.Add(UserOrder);
+            }
+            else
+            {
+                UserOrder.AddItem(new OrderItem(request.InventoryId, request.Count, Inventory.Price));
+            }
 
             if (ItemCountBiggerThanInventoryCount(Inventory, UserOrder))
                 return OperationResult.Error("");
