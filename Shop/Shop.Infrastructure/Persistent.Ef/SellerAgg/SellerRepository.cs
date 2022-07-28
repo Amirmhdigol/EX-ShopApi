@@ -35,8 +35,9 @@ namespace Shop.Infrastructure.Persistent.Ef.SellerAgg
         public async Task<InventoryResult?> GetInventoryById(long id)
         {
             using var Connection = _dapperContext.CreateConnection();
-            var sql = $"SELECT * FROM {_dapperContext.Inventories} WHERE Id=@InventoryId";
-            return await Connection.QueryFirstOrDefaultAsync<InventoryResult>(sql, new { InventoryId = id });
+            var sql = $"SELECT * FROM seller.Inventories WHERE Id=@InventoryId";
+            var res = await Connection.QueryFirstOrDefaultAsync<InventoryResult>(sql, new { InventoryId = id });
+            return res;
         }
     }
 }

@@ -86,9 +86,9 @@ public class SellerController : ApiController
         var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
         if (seller == null) return QueryResult(new InventoryDTO());
 
-        var result =  await _inventoryFacade.GetById(inventoryId);
+        var result = await _inventoryFacade.GetById(inventoryId);
 
-        if(result == null || result.SellerId != seller.Id) return QueryResult(new InventoryDTO());
+        if (result == null || result.SellerId != seller.Id) return QueryResult(new InventoryDTO());
 
         return QueryResult(result);
     }

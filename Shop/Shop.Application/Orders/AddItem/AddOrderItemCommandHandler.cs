@@ -8,6 +8,12 @@ namespace Shop.Application.Orders.AddItem
     {
         private readonly IOrderRepository _repository;
         private readonly ISellerRepository _sellerRepository;
+        public AddOrderItemCommandHandler(IOrderRepository repository, ISellerRepository sellerRepository)
+        {
+            _repository = repository;
+            _sellerRepository = sellerRepository;
+        }
+
         public async Task<OperationResult> Handle(AddOrderItemCommand request, CancellationToken cancellationToken)
         {
             var Inventory = await _sellerRepository.GetInventoryById(request.InventoryId);
@@ -28,17 +34,17 @@ namespace Shop.Application.Orders.AddItem
             else
             {
                 UserOrder.AddItem(new OrderItem(request.InventoryId, request.Count, Inventory.Price));
+                if (ItemCountBiggerThanInventoryCount(Inventory, UserOrder))
+                {
+                    return OperationResult.Error("");
+                }
             }
-
-            if (ItemCountBiggerThanInventoryCount(Inventory, UserOrder))
-                return OperationResult.Error("");
-
             await _repository.Save();
             return OperationResult.Success();
         }
         private bool ItemCountBiggerThanInventoryCount(InventoryResult inventory, Order order)
         {
-            var OrderItem = order.Items.First(f => f.Id == inventory.Id);
+            var OrderItem = order.Items.First(f => f.InventoryId == inventory.Id);
             if (OrderItem.Count > inventory.Count)
                 return true;
 
