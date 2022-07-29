@@ -26,10 +26,10 @@ namespace Shop.Domain.OrderAgg
         }
         public void DecreaseCount(int count)
         {
-            if (count == 1)
+            if (Count == 1)
                 return;
 
-            if(Count - count <= 1)
+            if (Count - count <= 0)
                 return;
 
             Count -= count;
@@ -56,4 +56,3 @@ namespace Shop.Domain.OrderAgg
         }
     }
 }
- 

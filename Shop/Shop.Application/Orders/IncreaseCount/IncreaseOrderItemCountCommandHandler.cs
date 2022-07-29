@@ -17,7 +17,7 @@ namespace Shop.Application.Orders.IncreaseCount
                 return OperationResult.NotFound();
 
             currentOrder.IncreaseItemCount(request.ItemId, request.Count);
-            _repository.Save();
+            await _repository.Save();
             return OperationResult.Success();
         }
     }
