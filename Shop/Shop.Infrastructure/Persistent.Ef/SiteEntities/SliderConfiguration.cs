@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Infrastructure.Persistent.Ef.SiteEntities
 {
-    internal class SliderConfiguration : IEntityTypeConfiguration<Slider>
+    public class SliderConfiguration : IEntityTypeConfiguration<Slider>
     {
         public void Configure(EntityTypeBuilder<Slider> builder)
         {

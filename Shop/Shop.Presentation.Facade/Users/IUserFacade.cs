@@ -27,6 +27,7 @@ public interface IUserFacade
 
     Task<UserDTO?> GetUserByPhoneNumber(string phoneNumber);
     Task<UserDTO?> GetUserById(long userId);
+    Task<string> GetUserNameById(long userId);
     Task<List<RoleDTO>> GetUsersRoleById(long userId);
     Task<LlongRoleId> GetUserRoleId(long userId);
     Task<UserFilterResult> GetUserByFilter(UserFilterParams filterParams);

@@ -17,6 +17,7 @@ using Shop.Query.Users.DTOs;
 using Shop.Query.Users.GetByFilter;
 using Shop.Query.Users.GetById;
 using Shop.Query.Users.GetByPhoneNumber;
+using Shop.Query.Users.GetNameById;
 using Shop.Query.Users.GetUserRoleId;
 using Shop.Query.Users.GetUserRoles;
 using Shop.Query.Users.UserTokens;
@@ -98,6 +99,11 @@ internal class UserFacade : IUserFacade
     public async Task<UserDTO?> GetUserByPhoneNumber(string phoneNumber)
     {
         return await _mediator.Send(new GetUserByPhoneNumberQuery(phoneNumber));
+    }
+
+    public async Task<string> GetUserNameById(long userId)
+    {
+        return await _mediator.Send(new GetUserNameByIdQuery(userId));
     }
 
     public async Task<LlongRoleId> GetUserRoleId(long userId)

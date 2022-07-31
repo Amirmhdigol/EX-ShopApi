@@ -92,6 +92,12 @@ public class UserController : ApiController
     {
         return QueryResult(await _facade.GetUserById(userId));
     }
+    
+    [HttpGet("UserName/{userId}")]
+    public async Task<ApiResult<string>> GetUserNameById(long userId)
+    {
+        return QueryResult(await _facade.GetUserNameById(userId));
+    }
 
     [PermissionChecker(Domain.RoleAgg.Permission.User_Management)]
     [HttpGet("PhoneNumber/{phoneNumber}")]
