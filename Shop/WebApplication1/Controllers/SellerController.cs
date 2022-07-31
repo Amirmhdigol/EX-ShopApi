@@ -80,7 +80,6 @@ public class SellerController : ApiController
     }
 
     [HttpGet("Inventory/{inventoryId}")]
-    [PermissionChecker(Domain.RoleAgg.Permission.Seller_Management)]
     public async Task<ApiResult<InventoryDTO>> GetSellerInventoryById(long inventoryId)
     {
         var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
@@ -89,6 +88,16 @@ public class SellerController : ApiController
         var result = await _inventoryFacade.GetById(inventoryId);
 
         if (result == null || result.SellerId != seller.Id) return QueryResult(new InventoryDTO());
+
+        return QueryResult(result);
+    }
+
+    [HttpGet("Inventory/ForAll/{inventoryId}")]
+    public async Task<ApiResult<InventoryDTO>> GetSellerInventoryByIdForAll(long inventoryId)
+    {
+        var result = await _inventoryFacade.GetById(inventoryId);
+
+        if (result == null) return QueryResult(new InventoryDTO());
 
         return QueryResult(result);
     }

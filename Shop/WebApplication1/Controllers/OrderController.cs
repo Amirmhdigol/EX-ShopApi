@@ -60,7 +60,7 @@ public class OrderController : ApiController
     }
 
     [HttpDelete("OrderItem/{itemid}")]
-    public async Task<ApiResult> RemoveItem(long itemid) //error
+    public async Task<ApiResult> RemoveItem(long itemid)
     {
         var result = await _facade.RemoveOrderItem(new RemoveOrdertemCommand(itemid, User.GetUserId()));
         return CommandResult(result);

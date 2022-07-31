@@ -18,7 +18,7 @@ public class OrderDto : BaseDTO
     public List<OrderItemDto> Items { get; set; }
     public OrderDiscount? Discount { get; set; }
     public OrderAddress? Address { get; set; }
-    public ShippingMethod? ShippingMethod { get; set; }
+    public OrderShippingMethod? ShippingMethod { get; set; }
     public DateTime? LastUpdate { get; set; }
 }
 public class OrderItemDto : BaseDTO

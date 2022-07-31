@@ -7,17 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Infrastructure.Persistent.Ef.SiteEntities
+namespace Shop.Infrastructure.Persistent.Ef.SiteEntities;
+internal class BannerConfiguration : IEntityTypeConfiguration<Banner>
 {
-    internal class BannerConfiguration : IEntityTypeConfiguration<Banner>
+    public void Configure(EntityTypeBuilder<Banner> builder)
     {
-        public void Configure(EntityTypeBuilder<Banner> builder)
-        {
-            builder.Property(b => b.ImageName)
-           .HasMaxLength(120).IsRequired();
+        builder.Property(b => b.ImageName)
+       .HasMaxLength(120).IsRequired();
 
-            builder.Property(b => b.Link)
-                .HasMaxLength(500).IsRequired();
-        }
+        builder.Property(b => b.Link)
+            .HasMaxLength(500).IsRequired();
     }
 }

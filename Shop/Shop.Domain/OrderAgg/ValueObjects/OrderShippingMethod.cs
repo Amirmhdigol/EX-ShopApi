@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Domain.OrderAgg.ValueObjects
 {
-    public class ShippingMethod
+    public class OrderShippingMethod
     {
         public string ShipppingType { get; private set; }
         public int ShippingCost { get; private set; }
